@@ -9,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 
 const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
     const { getToken } = actionToken
-    const { isLogin } = useSelector((state: RootState) => state.auth)
+    const { auth } = useSelector((state: RootState) => state.auth)
     
     const { getAuth } = useGetAuth()
     useEffect(() => {
@@ -19,9 +19,9 @@ const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
       }
     }, [])
     const handleAuth = () => {
-      if(getToken('token') && isLogin) {
+      if(getToken('token') && auth) {
         return true
-      }else if(getToken('token') && !isLogin) {
+      }else if(getToken('token') && !auth) {
         return <Loader />
       }else {
         return false

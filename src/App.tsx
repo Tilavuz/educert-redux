@@ -8,7 +8,9 @@ import RootLayout from "./layouts/root-layout";
 import Home from "@/pages/home/home";
 import Login from "@/pages/auth/login";
 const ErrorPage = lazy(() => import("@/pages/error-page"));
-const Tables = lazy(() => import("@/pages/tables/tables")) 
+const Tables = lazy(() => import("@/pages/tables/tables"));
+const Teachers = lazy(() => import("@/pages/teachers"));
+const Students = lazy(() => import("@/pages/students"))
 
 // Components
 import Loader from "@/components/common/loader";
@@ -16,7 +18,6 @@ import PrivateRoute from "./private/private-route";
 import AuthPrivateRoute from "./private/private-auth";
 
 export default function App() {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -47,7 +48,7 @@ export default function App() {
           path: "/teachers",
           element: (
             <Suspense fallback={<Loader />}>
-              <p>page</p>
+              <Teachers />
             </Suspense>
           ),
         },
@@ -59,6 +60,14 @@ export default function App() {
             </Suspense>
           ),
         },
+        {
+          path: '/students',
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Students />
+            </Suspense>
+          )
+        }
       ],
     },
     {

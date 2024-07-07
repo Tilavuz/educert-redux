@@ -12,9 +12,9 @@ export interface RoomInterface {
 
 export interface SubjectInterface {
     _id: string;
-    filial: string;
+    filial: FilialInterface | null;
     title: string;
-    photo?: string;
+    photo?: File | string | null;
 }
 
 export interface TimeInterface {
@@ -22,4 +22,8 @@ export interface TimeInterface {
     filial: string;
     start: string;
     end: string;
+}
+
+export interface GroupInterface {
+    
 }

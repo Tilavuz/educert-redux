@@ -54,6 +54,7 @@ export default function Login() {
           placeholder="Phone number"
           required
           defaultValue={"+998"}
+          name="phone"
         />
         <Input
           ref={passwordRef}
@@ -61,6 +62,7 @@ export default function Login() {
           type="password"
           placeholder="********"
           required
+          name="password"
         />
         <button className="font-bold border bg-black text-white mb-2 rounded-md p-2">
           {loading ? "loading..." : "Kirish"}

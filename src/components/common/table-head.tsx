@@ -5,16 +5,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription
+  DialogDescription,
 } from "@/components/ui/dialog";
 
 import { Plus } from "lucide-react";
-import FilialForm from "./filial-form";
 
-export default function FilialTableHead() {
+interface TableHeadProps {
+  children: React.ReactNode;
+  title: string;
+}
+
+export default function TableHead({ children, title }: TableHeadProps) {
   return (
     <div className="flex justify-between items-center">
-      <h2 className="font-bold text-2xl py-2">Filials Table</h2>
+      <h2 className="font-bold text-2xl py-2 uppercase">{title} Table</h2>
       <Dialog>
         <DialogTrigger asChild>
           <Button>
@@ -23,10 +27,10 @@ export default function FilialTableHead() {
         </DialogTrigger>
         <DialogContent className="bg-white">
           <DialogHeader>
-            <DialogTitle>Yangi filial qo'shish</DialogTitle>
+            <DialogTitle>Yangi {title} qo'shish</DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-          <FilialForm />
+          {children}
         </DialogContent>
       </Dialog>
     </div>

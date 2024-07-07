@@ -1,28 +1,28 @@
-import FilialBody from "./filial-body";
+import SubjectBody from "./subject-body";
 import TableHead from "../table-head";
-import FilialForm from "./filial-form";
+import SubjectForm from "./subject-form";
 
-export default function FilialTable() {
+export default function SubjectTable() {
   return (
     <div className="bg-white px-6 py-8 rounded-2xl">
       <div className="">
-        <TableHead title="filial">
-          <FilialForm />
+        <TableHead title="subject">
+          <SubjectForm />
         </TableHead>
         <table className="w-full">
           <thead>
             <tr className="">
               <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
-                Nomi
+                Subject
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
-                Joylashuvi
+                Filial
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-right py-3"></th>
             </tr>
           </thead>
           <tbody>
-            <FilialBody />
+            <SubjectBody />
           </tbody>
         </table>
       </div>

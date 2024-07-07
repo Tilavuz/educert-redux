@@ -22,7 +22,7 @@ export interface TeacherInterface {
     auth: string;
     name: string;
     lastname: string;
-    photo: string;
+    photo: File | string | null;
     about: string;
     grade: string;
     filial: FilialInterface[];

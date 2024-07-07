@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { FormEvent, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { add, change } from "@/features/filial/filial-slice";
+import { addFilial, changeFilial } from "@/features/filial/filial-slice";
 import { apiClient } from "@/api/api-client";
 
 export default function FilialForm({ id, title, location }: { id?: string, title?: string, location?: string }) {
@@ -20,20 +20,18 @@ export default function FilialForm({ id, title, location }: { id?: string, title
 
         if(id && filialData.address && filialData.title) {
             const res = await apiClient.put(`filials/update/${id}`, filialData)
-            dispatch(change(res.data.filial))
+            dispatch(changeFilial(res.data.filial))
             return
         }
 
-        if(filialData.address && filialData.address && !id) {
+        if(filialData.title && filialData.address && !id) {
             const res = await apiClient.post('/filials/add', filialData)
-            dispatch(add(res.data.filial))
+            dispatch(addFilial(res.data.filial))
             return
         }
     }catch(error) {
         console.log(error);
     }
-
-
   }
 
   return (

@@ -17,7 +17,7 @@ const filialSlice = createSlice({
   name: "filial",
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<FilialInterface>) => {
+    addFilial: (state, action: PayloadAction<FilialInterface>) => {
       if (state.filials) {
         state.filials.push(action.payload);
       } else {
@@ -25,7 +25,7 @@ const filialSlice = createSlice({
       }
       state.loading = false;
     },
-    change: (state, action: PayloadAction<FilialInterface>) => {
+    changeFilial: (state, action: PayloadAction<FilialInterface>) => {
       if (state.filials) {
         state.filials = state.filials.map((filial) =>
           filial._id === action.payload._id ? action.payload : filial
@@ -33,7 +33,7 @@ const filialSlice = createSlice({
       }
       state.loading = false;
     },
-    remove: (state, action: PayloadAction<string>) => {
+    removeFilial: (state, action: PayloadAction<string>) => {
       if (state.filials) {
         state.filials = state.filials.filter(
           (filial) => filial._id !== action.payload
@@ -44,16 +44,17 @@ const filialSlice = createSlice({
     getFilials: (state, action: PayloadAction<FilialInterface[]>) => {
       state.filials = action.payload;
     },
-    isPending: (state) => {
+    isFilialPending: (state) => {
       (state.loading = true), (state.error = null);
     },
-    fial: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
+    Filialfial: (state, action: PayloadAction<string>) => {
+      state.error = action.payload,
+      state.loading = false
     },
   },
 });
 
-export const { add, change, getFilials, isPending, fial, remove } =
+export const { addFilial, changeFilial, getFilials, isFilialPending, Filialfial, removeFilial } =
   filialSlice.actions;
 
 export default filialSlice.reducer;
