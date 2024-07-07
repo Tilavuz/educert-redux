@@ -8,44 +8,45 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import FilialForm from "./filial-form";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { useEffect } from "react";
-import { apiClient } from "@/api/api-client";
-import { removeFilial } from "@/features/filial/filial-slice";
+import RoomForm from "./room-form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useGetFilials from "@/hooks/use-get-filials";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { useEffect } from "react";
+import useGetRooms from "@/hooks/use-get-rooms";
+import { apiClient } from "@/api/api-client";
+import { removeRoom } from "@/features/room/room-slice";
 
-export default function FilialTableBody() {
-  const { filials } = useSelector((state: RootState) => state.filial);
-  const dispatch = useDispatch();
-  const { getAllFilials } = useGetFilials();
+export default function TableBody() {
+  const { rooms } = useSelector((state: RootState) => state.room);
+  const { getAllRooms } = useGetRooms()
+  const dispatch = useDispatch()
 
-  const deleteFilial = async (id: string) => {
+  useEffect(() => {
+    getAllRooms()
+  }, [getAllRooms])
+
+  const deleteRoom = async (id: string) => {
     try {
-      await apiClient.delete(`filials/delete/${id}`);
-      dispatch(removeFilial(id));
+      await apiClient.delete(`/rooms/delete/${id}`);
+      dispatch(removeRoom(id));
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    getAllFilials();
-  }, [getAllFilials]);
   return (
     <>
-      {filials !== null && filials[0] ? (
-        filials.map((filial) => {
+      {rooms !== null && rooms[0] ? (
+        rooms.map((room) => {
           return (
-            <tr key={filial._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{filial.title}</td>
-              <td className="py-2 font-bold">{filial.address}</td>
+            <tr key={room._id} className="border-t border-t-[#a6b3c4]">
+              <td className="py-2 font-bold">{typeof room.filial === 'object' ? room?.filial?.title : ""}</td>
+              <td className="py-2 font-bold">{room.number}</td>
               <td className="text-right py-2">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -63,15 +64,10 @@ export default function FilialTableBody() {
                           <DialogTitle>Filialni tahrirlash</DialogTitle>
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <FilialForm
-                          id={filial._id}
-                          title={filial.title}
-                          location={filial.address}
-                        />
+                        <RoomForm id={room._id} number={room.number} />
                       </DialogContent>
                     </Dialog>
-
-                    <Button onClick={() => deleteFilial(filial._id)} className="text-red-600" variant={"link"}>
+                    <Button onClick={() => deleteRoom(room._id)} className="text-red-600" variant={"link"}>
                       delete
                     </Button>
                   </PopoverContent>

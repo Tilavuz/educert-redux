@@ -6,7 +6,7 @@ export interface FilialInterface {
 
 export interface RoomInterface {
     _id: string;
-    filial: string;
+    filial: string | FilialInterface | null;
     number: number
 }
 

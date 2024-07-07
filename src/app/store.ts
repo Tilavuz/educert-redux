@@ -3,6 +3,7 @@ import authReducer from '@/features/auth/auth-slice'
 import filialReducer from '@/features/filial/filial-slice'
 import teacherReducer from '@/features/teacher/teacher-slice'
 import subjectReducer from '@/features/subject/subject-slice'
+import roomReducer from '@/features/room/room-slice'
 
 
 export const store = configureStore({
@@ -10,7 +11,8 @@ export const store = configureStore({
         auth: authReducer,
         filial: filialReducer,
         teacher: teacherReducer,
-        subject: subjectReducer
+        subject: subjectReducer,
+        room: roomReducer
     }
 })
 
