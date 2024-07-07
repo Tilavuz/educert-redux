@@ -1,3 +1,5 @@
+import { TeacherInterface } from "./auth-interface";
+
 export interface FilialInterface {
     _id: string;
     title: string;
@@ -25,5 +27,9 @@ export interface TimeInterface {
 }
 
 export interface GroupInterface {
-    
+    _id: string,
+    teacher: TeacherInterface | null,
+    title: string,
+    subject: SubjectInterface | null,
+    filial: FilialInterface
 }

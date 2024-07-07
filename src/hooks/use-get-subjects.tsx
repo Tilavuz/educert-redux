@@ -10,7 +10,7 @@ export default function useGetSubjects() {
 
   const getAllSubjects = useCallback(async () => {
     try {
-      if (!subjects) {
+      if (subjects === null || !subjects[0]) {
         const res = await apiClient.get("/subjects");
         dispatch(getSubjects(res.data));
       }else {

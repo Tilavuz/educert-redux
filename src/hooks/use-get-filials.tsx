@@ -10,7 +10,7 @@ export default function useGetFilials() {
 
   const getAllFilials = useCallback(async () => {
     try {
-      if (!filials) {
+      if (filials === null || !filials[0]) {
         const res = await apiClient.get("/filials");
         dispatch(getFilials(res.data));
       }else {

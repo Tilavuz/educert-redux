@@ -9,34 +9,27 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   const { getToken } = actionToken;
-  const { auth } = useSelector((state: RootState) => state.auth);
-  const { getAuth } = useGetAuth()
+  const auth = useSelector((state: RootState) => state.auth.auth);
+  const { getAuth } = useGetAuth();
 
-    useEffect(() => {
-      const token = getToken('token')
-      if(token) {
-        getAuth()
-      }
-    }, [])
-
-    const handleAuth = () => {
-      if(getToken('token') && auth) {
-        return true
-      }else if(getToken('token') && !auth) {
-        return <Loader />
-      }else {
-        return false
-      }
+  useEffect(() => {
+    const token = getToken('token');
+    if (token) {
+      getAuth();
     }
-    const is = handleAuth()
+  }, [getAuth, getToken, auth]);
 
-  return (
-    <>
-    {
-      is ? children : <Navigate to={'/login'} />
+  const handleAuth = () => {
+    if (getToken('token') && auth) {
+      return children;
+    } else if (getToken('token') && !auth) {
+      return <Loader />;
+    } else {
+      return <Navigate to='/login' />;
     }
-    </>
-  )
+  };
+
+  return handleAuth();
 };
 
 export default PrivateRoute;

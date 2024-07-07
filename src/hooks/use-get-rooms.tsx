@@ -10,7 +10,7 @@ export default function useGetRooms() {
 
   const getAllRooms = useCallback(async () => {
     try {
-      if (!rooms) {
+      if (rooms === null || !rooms[0]) {
         const res = await apiClient.get("/rooms");
         dispatch(getRooms(res.data));
       }else {
