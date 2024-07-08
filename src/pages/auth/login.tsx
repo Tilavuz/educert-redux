@@ -33,7 +33,6 @@ export default function Login() {
       navigate("/");
       dispatch(loginSuccess(res.data));
     } catch (error) {
-      console.log(error);
       dispatch(
         loginFail(error instanceof Error ? error.message : "Server error!")
       );

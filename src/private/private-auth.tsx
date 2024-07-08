@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 
 const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   const { getToken } = actionToken;
-  const { auth } = useSelector((state: RootState) => state.auth);
+  const { auth, error } = useSelector((state: RootState) => state.auth);
   const { getAuth } = useGetAuth();
 
   useEffect(() => {
@@ -20,12 +20,12 @@ const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   }, [auth]);
 
   const handleAuth = () => {
-    if (getToken("token") && auth) {
+    if (getToken("token") && !auth && error) {
       return children;
-    } else if (getToken("token") && !auth) {
+    } else if (getToken("token") && !auth && !error) {
       return <Loader />;
     } else {
-      return <Navigate to="/login" />;
+      return <Navigate to="/" />;
     }
   };
 
