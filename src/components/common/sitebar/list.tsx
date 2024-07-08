@@ -1,4 +1,4 @@
-import { BookUser, File, GraduationCap, House, NotebookText, Rocket, Table, UserRound } from "lucide-react";
+import { BookUser, File, GraduationCap, House, NotebookText, Rocket, Table, User, UserRound } from "lucide-react";
 
 export const list = [
     {
@@ -20,5 +20,10 @@ export const list = [
         route: '/students',
         title: "Students",
         icon: <GraduationCap />
+    },
+    {
+        route: '/users',
+        title: "Users",
+        icon: <User />
     }
 ]

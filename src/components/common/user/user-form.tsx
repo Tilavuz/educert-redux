@@ -9,37 +9,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  addTeacher,
-  changeTeacher,
-  isTeacherPending,
-} from "@/features/teacher/teacher-slice";
+import { addUser, changeUser } from "@/features/user/user-slice";
+import useGetFilials from "@/hooks/use-get-filials";
 import { CornerRightDown } from "lucide-react";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function TeacherForm({
+export default function UserForm({
   id,
   name,
   lastname,
-  about,
-  grade,
 }: {
   id?: string;
   name?: string;
   lastname?: string;
-  about?: string;
-  grade?: string;
 }) {
   const nameRef = useRef<HTMLInputElement>(null);
-  const [checkFilials, setCheckFilials] = useState<string[]>([]);
   const lastnameRef = useRef<HTMLInputElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
-  const aboutRef = useRef<HTMLInputElement>(null);
-  const gradeRef = useRef<HTMLInputElement>(null);
-  const { filials } = useSelector((state: RootState) => state.filial);
   const { auth } = useSelector((state: RootState) => state.auth);
+  const [checkFilials, setCheckFilials] = useState<string[]>([]);
+
+  const { filials } = useSelector((state: RootState) => state.filial);
   const dispatch = useDispatch();
+  const { getAllFilials } = useGetFilials();
 
   const handleCheckbox = (e: boolean, id: string) => {
     if (e) {
@@ -59,79 +52,72 @@ export default function TeacherForm({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const teacherData = {
+      const userData = {
+        auth: auth?._id,
+        filial: checkFilials,
         name: nameRef?.current?.value,
         lastname: lastnameRef?.current?.value,
-        photo: photoRef?.current?.files ? photoRef.current.files[0] : null,
-        about: aboutRef?.current?.value,
-        filial: checkFilials,
-        grade: gradeRef?.current?.value,
-        auth: auth?._id,
+        photo: photoRef?.current?.files ? photoRef?.current?.files[0] : null,
       };
 
-      if (id) {
-        dispatch(isTeacherPending());
-        const res = await apiClient.put(`/teachers/update/${id}`, teacherData, {
+      if (
+        id &&
+        userData.auth &&
+        userData.filial &&
+        userData.name &&
+        userData.lastname &&
+        userData.photo
+      ) {
+        const res = await apiClient.put(`users/update/${id}`, userData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(changeTeacher(res.data.teacher));
+        dispatch(changeUser(res.data.user));
         return;
       }
 
       if (
         !id &&
-        teacherData.about &&
-        teacherData.filial.length > 0 &&
-        teacherData.grade &&
-        teacherData.lastname &&
-        teacherData.name
+        userData.auth &&
+        userData.filial &&
+        userData.name &&
+        userData.lastname && userData.photo
       ) {
-        dispatch(isTeacherPending());
-        const res = await apiClient.post("/teachers/add", teacherData, {
+        const res = await apiClient.post("/users/add", userData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(addTeacher(res.data.teacher));
+        dispatch(addUser(res.data.user));
+        return;
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    getAllFilials();
+  }, [getAllFilials]);
+
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
       <Input
-        defaultValue={name || ""}
         required
         ref={nameRef}
+        defaultValue={name ?? ""}
         type="text"
         placeholder="Ism"
       />
       <Input
-        defaultValue={lastname || ""}
         required
         ref={lastnameRef}
+        defaultValue={lastname ?? ""}
         type="text"
         placeholder="Familya"
       />
       <Input required ref={photoRef} type="file" />
-      <Input
-        defaultValue={about || ""}
-        required
-        ref={aboutRef}
-        type="text"
-        placeholder="Tarif"
-      />
-      <Input
-        defaultValue={grade || ""}
-        required
-        ref={gradeRef}
-        type="text"
-        placeholder="Darajasi"
-      />
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -148,13 +134,18 @@ export default function TeacherForm({
             return (
               <Label className="flex items-center gap-2" key={filial._id}>
                 {filial.title} - {filial.address}
-                <Checkbox checked={checkFilials.includes(filial._id)} onCheckedChange={(e: boolean) => handleCheckbox(e, filial._id)} />
+                <Checkbox
+                  checked={checkFilials.includes(filial._id)}
+                  onCheckedChange={(e: boolean) =>
+                    handleCheckbox(e, filial._id)
+                  }
+                />
               </Label>
             );
           })}
         </PopoverContent>
       </Popover>
-      <Button type="submit">Change</Button>
+      <Button>Kiritish</Button>
     </form>
   );
 }

@@ -1,6 +1,5 @@
-import { apiClient } from "@/api/api-client";
 import { RootState } from "@/app/store";
-import Card from "@/components/common/teacher/card";
+import TeacherCard from "@/components/common/teacher/teacher-card";
 import TeacherForm from "@/components/common/teacher/teacher-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,41 +10,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getFilials } from "@/features/filial/filial-slice";
-import { getTeachers } from "@/features/teacher/teacher-slice";
+import useGetFilials from "@/hooks/use-get-filials";
+import useGetTeachers from "@/hooks/use-get-teachers";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Teachers() {
   const { teachers } = useSelector((state: RootState) => state.teacher);
-  const { filials } = useSelector((state: RootState) => state.filial);
-  const dispatch = useDispatch();
+  const { getAllTeachers } = useGetTeachers()
+  const { getAllFilials } = useGetFilials()
 
   useEffect(() => {
-    const getAllTeachers = async () => {
-      try {
-        const res = await apiClient.get("/teachers");
-        dispatch(getTeachers(res.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (!filials) {
-      const getAllFilials = async () => {
-        try {
-          const res = await apiClient.get("/filials");
-          dispatch(getFilials(res.data));
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getAllFilials();
-    }
-    if (!teachers) {
-      getAllTeachers();
-    }
-  }, []);
+    getAllTeachers()
+    getAllFilials()
+  }, [getAllTeachers, getAllFilials]);
 
 
   return (
@@ -69,7 +48,7 @@ export default function Teachers() {
       <div className="flex items-start justify-start gap-4 flex-wrap pl-4">
         {teachers !== null &&
           teachers?.map((teacher) => (
-            <Card
+            <TeacherCard
               key={teacher._id}
               name={teacher.name}
               lastname={teacher.lastname}

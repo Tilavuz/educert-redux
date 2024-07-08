@@ -9,12 +9,12 @@ export interface AuthInterface {
 
 
 export interface UserInterface  {
-    _id: string;
-    auth: string;
+    _id?: string;
+    auth?: string;
     name: string;
     lastname: string;
     photo: string;
-    filials: string[];
+    filial: FilialInterface[] | null;
 }
 
 export interface TeacherInterface {

@@ -11,6 +11,7 @@ const ErrorPage = lazy(() => import("@/pages/error-page"));
 const Tables = lazy(() => import("@/pages/tables/tables"));
 const Teachers = lazy(() => import("@/pages/teachers"));
 const Students = lazy(() => import("@/pages/students"))
+const Users = lazy(() => import("@/pages/users"))
 
 // Components
 import Loader from "@/components/common/loader";
@@ -65,6 +66,14 @@ export default function App() {
           element: (
             <Suspense fallback={<Loader />}>
               <Students />
+            </Suspense>
+          )
+        },
+        {
+          path: '/users',
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Users />
             </Suspense>
           )
         }

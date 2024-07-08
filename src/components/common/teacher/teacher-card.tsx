@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { removeTeacher } from "@/features/teacher/teacher-slice";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
-export default function Card({
+export default function TeacherCard({
   name,
   lastname,
   photo,
@@ -84,7 +84,7 @@ export default function Card({
         </ul>
       </div>
       <div className="">
-        <h3 className="text-xl font-bold">
+        <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {name} {lastname}
         </h3>
         <p className="text-sm text-gray-500 mb-2">{about}</p>
