@@ -1,13 +1,18 @@
 import { apiClient } from "@/api/api-client";
+import { RootState } from "@/app/store";
 import { loginFail, loginSuccess } from "@/features/auth/auth-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function useGetAuth() {
   const dispatch = useDispatch();
+  const { auth } = useSelector((state: RootState) => state.auth)
+  
   const getAuth = async () => {
     try {
-      const res = await apiClient.get("/auth");
-      dispatch(loginSuccess(res.data));
+      if(!auth) {
+        const res = await apiClient.get("/auth");
+        dispatch(loginSuccess(res.data));
+      }
     } catch (error) {
       dispatch(loginFail(error instanceof Error ? error.message : "Server error!"))
     }

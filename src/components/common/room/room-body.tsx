@@ -44,9 +44,9 @@ export default function TableBody() {
       {rooms !== null && rooms[0] ? (
         rooms.map((room) => {
           return (
-            <tr key={room._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{typeof room.filial === 'object' ? room?.filial?.title : ""}</td>
-              <td className="py-2 font-bold">{room.number}</td>
+            <tr key={room?._id} className="border-t border-t-[#a6b3c4]">
+              <td className="py-2 font-bold">{typeof room?.filial === 'object' ? room?.filial?.title : ""}</td>
+              <td className="py-2 font-bold">{room?.number}</td>
               <td className="text-right py-2">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -64,10 +64,10 @@ export default function TableBody() {
                           <DialogTitle>Filialni tahrirlash</DialogTitle>
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <RoomForm id={room._id} number={room.number} />
+                        <RoomForm id={room?._id} number={room?.number} />
                       </DialogContent>
                     </Dialog>
-                    <Button onClick={() => deleteRoom(room._id)} className="text-red-600" variant={"link"}>
+                    <Button onClick={() => deleteRoom(room?._id)} className="text-red-600" variant={"link"}>
                       delete
                     </Button>
                   </PopoverContent>

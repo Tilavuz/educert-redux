@@ -11,21 +11,22 @@ const PrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   const { getToken } = actionToken;
   const {auth, error} = useSelector((state: RootState) => state.auth);
   const { getAuth } = useGetAuth();
-
+  
   useEffect(() => {
     const token = getToken('token');
     if (token) {
       getAuth();
     }
-  }, [getAuth, getToken, auth]);
+  }, [getAuth, getToken]);
 
   const handleAuth = () => {
-    if (getToken('token') && auth) {
+    const token = getToken("token")
+    if (token && auth) {
       return children;
-    } else if (getToken('token') && !auth && !error) {
+    } else if (token && !auth && !error) {
       return <Loader />;
     } else {
-      return <Navigate to='/login' />;
+      return <Navigate to="/login" />;
     }
   };
 

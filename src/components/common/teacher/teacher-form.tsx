@@ -117,7 +117,7 @@ export default function TeacherForm({
         type="text"
         placeholder="Familya"
       />
-      <Input required ref={photoRef} type="file" />
+      <Input ref={photoRef} type="file" />
       <Input
         defaultValue={about || ""}
         required

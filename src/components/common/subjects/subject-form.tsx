@@ -24,7 +24,7 @@ export default function SubjectForm({
 }) {
   const titleRef = useRef<HTMLInputElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
-  const [filial, setFilial] = useState<string | null>(null)
+  const [filial, setFilial] = useState<string | null>(null);
 
   const { filials } = useSelector((state: RootState) => state.filial);
   const dispatch = useDispatch();
@@ -32,7 +32,6 @@ export default function SubjectForm({
 
   useEffect(() => {
     getAllFilials();
-    
   }, [getAllFilials]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -40,18 +39,29 @@ export default function SubjectForm({
     try {
       const subjectData = {
         title: titleRef?.current?.value,
-        photo: photoRef?.current && photoRef?.current?.files ? photoRef?.current?.files[0] : null,
-        filial
+        photo:
+          photoRef?.current && photoRef?.current?.files
+            ? photoRef?.current?.files[0]
+            : null,
+        filial,
       };
 
       if (id && subjectData.title && subjectData.filial) {
-        const res = await apiClient.put(`subjects/update/${id}`, subjectData);
+        const res = await apiClient.put(`subjects/update/${id}`, subjectData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         dispatch(changeSubject(res.data.subject));
         return;
       }
 
       if (subjectData.title && !id) {
-        const res = await apiClient.post("/subjects/add", subjectData);
+        const res = await apiClient.post("/subjects/add", subjectData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         dispatch(addSubject(res.data.subject));
         return;
       }
@@ -62,7 +72,12 @@ export default function SubjectForm({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
-      <Input defaultValue={title ?? ""} ref={titleRef} type="text" placeholder="subject nomi" />
+      <Input
+        defaultValue={title ?? ""}
+        ref={titleRef}
+        type="text"
+        placeholder="subject nomi"
+      />
       <Select onValueChange={(e) => setFilial(e)}>
         <SelectTrigger>
           <SelectValue placeholder="Filiallardan birini tanlang!" />

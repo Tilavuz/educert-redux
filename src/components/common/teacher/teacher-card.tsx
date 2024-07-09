@@ -46,8 +46,8 @@ export default function TeacherCard({
   const dispatch = useDispatch();
   const deleteTeacher = async () => {
     try {
-      const res = await apiClient.delete(`/teachers/delete/${id}`);
-      dispatch(removeTeacher(res.data.teacher._id));
+      await apiClient.delete(`/teachers/delete/${id}`);
+      dispatch(removeTeacher(id));
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +59,7 @@ export default function TeacherCard({
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img
             className="shadow-sm object-cover object-center w-full h-full"
-            src={`${apiUrl.slice(0, 22)}${photo}`}
+            src={`${apiUrl.slice(0, 22)}uploads/teachers/${photo}`}
             alt="teacher profile"
           />
         </div>

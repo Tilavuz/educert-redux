@@ -41,7 +41,9 @@ export default function RoomForm({
 
       if (roomData.number && !id) {
         const res = await apiClient.post("/rooms/add", roomData);
-        dispatch(addRoom(res.data.room));
+        if(res.data.room) {
+          dispatch(addRoom(res.data.room));
+        }
         return;
       }
     } catch (error) {

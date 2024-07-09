@@ -6,19 +6,31 @@ import {
   loginStart,
   loginSuccess,
 } from "@/features/auth/auth-slice";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { actionToken } from "@/helpers/action-token";
+import useGetAuth from "@/hooks/use-get-auth";
 
 export default function Login() {
   const phoneRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const { loading } = useSelector((state: RootState) => state.auth);
+  const { auth, loading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setToken } = actionToken;
+  const { getAuth } = useGetAuth()
+
+  useLayoutEffect(() => {
+    getAuth()
+  }, [getAuth])
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,8 +42,8 @@ export default function Login() {
       };
       const res = await apiClient.post("/auth/login", loginData);
       setToken("token", res.data.token);
-      navigate("/");
       dispatch(loginSuccess(res.data));
+      navigate("/");
     } catch (error) {
       dispatch(
         loginFail(error instanceof Error ? error.message : "Server error!")
@@ -42,7 +54,7 @@ export default function Login() {
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <form
-        onSubmit={(e) => login(e)}
+        onSubmit={login}
         className="border-2 flex flex-col gap-2 p-2 rounded-md max-w-[500px] w-full"
       >
         <h1 className="font-bold text-2xl p-4">Login page</h1>

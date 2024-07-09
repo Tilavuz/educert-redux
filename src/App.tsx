@@ -16,7 +16,7 @@ const Users = lazy(() => import("@/pages/users"))
 // Components
 import Loader from "@/components/common/loader";
 import PrivateRoute from "./private/private-route";
-import AuthPrivateRoute from "./private/private-auth";
+// import AuthPrivateRoute from "./private/private-auth";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -82,9 +82,9 @@ export default function App() {
     {
       path: "/login",
       element: (
-        <AuthPrivateRoute>
+        // <AuthPrivateRoute>
           <Login />
-        </AuthPrivateRoute>
+        // </AuthPrivateRoute>
       ),
       errorElement: (
         <Suspense fallback={<Loader />}>

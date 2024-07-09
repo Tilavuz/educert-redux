@@ -7,6 +7,9 @@ import { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
+
+// not worked ****************************
+
 const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   const { getToken } = actionToken;
   const { auth, error } = useSelector((state: RootState) => state.auth);
@@ -17,7 +20,7 @@ const AuthPrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
     if (token) {
       getAuth();
     }
-  }, [auth]);
+  }, [auth, getAuth, getToken]);
 
   const handleAuth = () => {
     if (getToken("token") && !auth && error) {
