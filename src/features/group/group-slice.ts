@@ -5,12 +5,14 @@ export interface GroupState {
   loading: boolean;
   error: string | null;
   groups: GroupInterface[] | null;
+  filialGroups: GroupInterface[] | null
 }
 
 const initialState: GroupState = {
   loading: false,
   error: null,
   groups: null,
+  filialGroups: null
 };
 
 const groupSlice = createSlice({
@@ -28,7 +30,7 @@ const groupSlice = createSlice({
     changeGroup: (state, action: PayloadAction<GroupInterface>) => {
       if (state.groups) {
         state.groups = state.groups.map((group) =>
-            group._id === action.payload._id ? action.payload : group
+          group._id === action.payload._id ? action.payload : group
         );
       }
       state.loading = false;
@@ -44,6 +46,9 @@ const groupSlice = createSlice({
     getGroups: (state, action: PayloadAction<GroupInterface[]>) => {
       state.groups = action.payload;
     },
+    getFilialGroups: (state, action: PayloadAction<GroupInterface[]>) => {
+      state.filialGroups = action.payload;
+    },
     isGroupPending: (state) => {
       (state.loading = true), (state.error = null);
     },
@@ -54,7 +59,15 @@ const groupSlice = createSlice({
 });
 
 
-export const { addGroup, groupfial, isGroupPending, getGroups, removeGroup, changeGroup  } = groupSlice.actions
+export const {
+  addGroup,
+  groupfial,
+  isGroupPending,
+  getGroups,
+  removeGroup,
+  changeGroup,
+  getFilialGroups,
+} = groupSlice.actions;
 
 
 export default groupSlice.reducer

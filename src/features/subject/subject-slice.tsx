@@ -5,12 +5,14 @@ export interface SubjectState {
   loading: boolean;
   error: string | null;
   subjects: SubjectInterface[] | null;
+  filialSubjects: SubjectInterface[] | null
 }
 
 const initialState: SubjectState = {
   loading: false,
   error: null,
   subjects: null,
+  filialSubjects: null
 };
 
 const subjectSlice = createSlice({
@@ -44,6 +46,9 @@ const subjectSlice = createSlice({
     getSubjects: (state, action: PayloadAction<SubjectInterface[]>) => {
       state.subjects = action.payload;
     },
+    getFilialSubjects: (state, action: PayloadAction<SubjectInterface[]>) => {
+      state.filialSubjects = action.payload
+    },
     isSubjectPending: (state) => {
       (state.loading = true), (state.error = null);
     },
@@ -53,6 +58,14 @@ const subjectSlice = createSlice({
   },
 });
 
-export const { addSubject, changeSubject, removeSubject, getSubjects, isSubjectPending, subjectfial } = subjectSlice.actions;
+export const {
+  addSubject,
+  changeSubject,
+  removeSubject,
+  getSubjects,
+  isSubjectPending,
+  subjectfial,
+  getFilialSubjects,
+} = subjectSlice.actions;
 
 export default subjectSlice.reducer;

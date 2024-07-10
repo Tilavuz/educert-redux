@@ -13,10 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RootState } from "@/app/store";
-import useGetFilials from "@/hooks/use-get-filials";
 import useGetSubjects from "@/hooks/use-get-subjects";
-import useGetTeachers from "@/hooks/use-get-teachers";
 import { toast } from "sonner";
+import useGetSubjectsFilial from "@/hooks/use-get-subjects-filial";
+import useGetTeachersFilial from "@/hooks/use-get-teachers-filial";
 
 export default function GroupForm({
   id,
@@ -31,21 +31,22 @@ export default function GroupForm({
   const [teacher, setTeacher] = useState<string | null>(null);
   const dispatch = useDispatch();
   const { filials } = useSelector((state: RootState) => state.filial);
-  const { subjects } = useSelector((state: RootState) => state.subject);
-  const { teachers } = useSelector((state: RootState) => state.teacher);
+  const { filialSubjects } = useSelector((state: RootState) => state.subject);
+  const { filialTeachers } = useSelector((state: RootState) => state.teacher);
 
-  console.log(subject);
-  
-
-  const { getAllFilials } = useGetFilials();
   const { getAllSubjects } = useGetSubjects();
-  const { getAllTeachers } = useGetTeachers();
+  const { getTeachersOneFilial } = useGetTeachersFilial();
+  const { getSubjectsOneFilial } = useGetSubjectsFilial()
 
   useEffect(() => {
-    getAllFilials();
     getAllSubjects();
-    getAllTeachers();
-  }, [getAllFilials, getAllSubjects, getAllTeachers]);
+  }, [getAllSubjects]);
+
+  const handleFilial = (value: string) => {
+    setFilial(value)
+    getSubjectsOneFilial(value)
+    getTeachersOneFilial(value)
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -91,7 +92,7 @@ export default function GroupForm({
         ref={titleRef}
         placeholder="Nom"
       />
-      <Select onValueChange={(e) => setFilial(e)}>
+      <Select onValueChange={(value) => handleFilial(value)}>
         <SelectTrigger>
           <SelectValue placeholder="Filiallardan birini tanlang!" />
         </SelectTrigger>
@@ -107,13 +108,13 @@ export default function GroupForm({
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select onValueChange={(e) => setSubject(e)}>
+      <Select disabled={!filial} onValueChange={(e) => setSubject(e)}>
         <SelectTrigger>
           <SelectValue placeholder="subjectlardan birini tanlang!" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {subjects?.map((subject) => {
+            {filialSubjects?.map((subject) => {
               return (
                 <SelectItem key={subject._id} value={subject._id}>
                   {subject.title}
@@ -123,13 +124,13 @@ export default function GroupForm({
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select onValueChange={(e) => setTeacher(e)}>
+      <Select disabled={!filial} onValueChange={(e) => setTeacher(e)}>
         <SelectTrigger>
           <SelectValue placeholder="Ustozlardan birini tanlang!" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {teachers?.map((teacher) => {
+            {filialTeachers?.map((teacher) => {
               return (
                 <SelectItem key={teacher._id} value={teacher._id}>
                   {teacher.name} / {teacher.lastname}

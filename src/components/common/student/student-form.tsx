@@ -19,8 +19,8 @@ import {
 } from "@/components/ui/select";
 import { addStudent, changeStudent } from "@/features/student/student-slice";
 import useGetFilials from "@/hooks/use-get-filials";
-import useGetGroups from "@/hooks/use-get-groups";
-import useGetSubjects from "@/hooks/use-get-subjects";
+import useGetGroupsFilial from "@/hooks/use-get-groups-filial";
+import useGetSubjectsFilial from "@/hooks/use-get-subjects-filial";
 import { CornerRightDown } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,13 +44,13 @@ export default function StudentForm({
   const [filial, setFilial] = useState<string | null>(null);
 
   const { filials } = useSelector((state: RootState) => state.filial);
-  const { groups } = useSelector((state: RootState) => state.group);
-  const { subjects } = useSelector((state: RootState) => state.subject);
+  const { filialGroups } = useSelector((state: RootState) => state.group);
+  const { filialSubjects } = useSelector((state: RootState) => state.subject);
 
   const dispatch = useDispatch();
   const { getAllFilials } = useGetFilials();
-  const { getAllGroups } = useGetGroups();
-  const { getAllSubjects } = useGetSubjects();
+  const { getSubjectsOneFilial } = useGetSubjectsFilial()
+  const { getGroupsOneFilial } = useGetGroupsFilial()
 
   const handleGroupCheckbox = (e: boolean, id: string) => {
     if (e) {
@@ -81,6 +81,12 @@ export default function StudentForm({
       });
     }
   };
+
+  const handleFilial = (value: string) => {
+    setFilial(value)
+    getGroupsOneFilial(value)
+    getSubjectsOneFilial(value)
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -132,9 +138,7 @@ export default function StudentForm({
 
   useEffect(() => {
     getAllFilials();
-    getAllGroups();
-    getAllSubjects();
-  }, [getAllFilials, getAllGroups, getAllSubjects]);
+  }, [getAllFilials]);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
@@ -153,7 +157,7 @@ export default function StudentForm({
         placeholder="Familya"
       />
       <Input ref={photoRef} type="file" />
-      <Select onValueChange={(e) => setFilial(e)}>
+      <Select onValueChange={(value) => handleFilial(value)}>
         <SelectTrigger>
           <SelectValue placeholder="Filiallardan birini tanlang!" />
         </SelectTrigger>
@@ -175,13 +179,14 @@ export default function StudentForm({
             className="flex items-start gap-2"
             variant={"outline"}
             type="button"
+            disabled={!filial}
           >
             Guruhlar
             <CornerRightDown />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2 max-h-[160px] overflow-y-auto">
-          {groups?.map((group) => {
+          {filialGroups?.map((group) => {
             return (
               <Label className="flex items-center gap-2" key={group._id}>
                 {group.title}
@@ -202,13 +207,14 @@ export default function StudentForm({
             className="flex items-start gap-2"
             variant={"outline"}
             type="button"
+            disabled={!filial}
           >
             Fanlar
             <CornerRightDown />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2 max-h-[160px] overflow-y-auto">
-          {subjects?.map((subject) => {
+          {filialSubjects?.map((subject) => {
             return (
               <Label className="flex items-center gap-2" key={subject._id}>
                 {subject.title}
