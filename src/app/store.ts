@@ -7,6 +7,7 @@ import roomReducer from '@/features/room/room-slice'
 import groupReducer from '@/features/group/group-slice'
 import userReducer from '@/features/user/user-slice'
 import studentReducer from "@/features/student/student-slice";
+import timeReducer from "@/features/time/time-slice";
 
 
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
         room: roomReducer,
         group: groupReducer,
         user: userReducer,
-        student: studentReducer
+        student: studentReducer,
+        time: timeReducer
     }
 })
 

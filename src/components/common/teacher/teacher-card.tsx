@@ -24,6 +24,7 @@ import TeacherForm from "./teacher-form";
 import { apiClient } from "@/api/api-client";
 import { useDispatch } from "react-redux";
 import { removeTeacher } from "@/features/teacher/teacher-slice";
+import { toast } from "sonner";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function TeacherCard({
@@ -46,10 +47,12 @@ export default function TeacherCard({
   const dispatch = useDispatch();
   const deleteTeacher = async () => {
     try {
-      await apiClient.delete(`/teachers/delete/${id}`);
+      const res = await apiClient.delete(`/teachers/delete/${id}`);
       dispatch(removeTeacher(id));
+      toast.success(res.data.message)
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 
@@ -78,7 +81,7 @@ export default function TeacherCard({
           <li className="font-thin text-sm">
             {filial
               .slice(2)
-              .map((filial) => filial.title)
+              .map((filial) => filial?.title)
               .join(", ")}
           </li>
         </ul>

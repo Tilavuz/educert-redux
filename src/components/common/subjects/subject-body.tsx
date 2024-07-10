@@ -20,6 +20,7 @@ import useGetSubjects from "@/hooks/use-get-subjects";
 import { useEffect } from "react";
 import { apiClient } from "@/api/api-client";
 import { removeSubject } from "@/features/subject/subject-slice";
+import { toast } from "sonner";
 
 export default function SubjectBody() {
   const { subjects } = useSelector((state: RootState) => state.subject);
@@ -31,10 +32,12 @@ export default function SubjectBody() {
 
   const deleteSubject = async (id: string) => {
     try {
-      await apiClient.delete(`/subjects/delete/${id}`);
+      const res = await apiClient.delete(`/subjects/delete/${id}`);
       dispatch(removeSubject(id));
+      toast.success(res.data.message)
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 
@@ -44,7 +47,7 @@ export default function SubjectBody() {
         subjects?.map((subject) => {
           return (
             <tr key={subject._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{subject.title}</td>
+              <td className="py-2 font-bold">{subject?.title}</td>
               <td className="py-2 font-bold">
                 {typeof subject?.filial === "object"
                   ? subject?.filial?.title
@@ -67,11 +70,11 @@ export default function SubjectBody() {
                           <DialogTitle>Filialni tahrirlash</DialogTitle>
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <SubjectForm id={subject._id} title={subject.title} />
+                        <SubjectForm id={subject?._id} title={subject?.title} />
                       </DialogContent>
                     </Dialog>
                     <Button
-                      onClick={() => deleteSubject(subject._id)}
+                      onClick={() => deleteSubject(subject?._id)}
                       className="text-red-600"
                       variant={"link"}
                     >

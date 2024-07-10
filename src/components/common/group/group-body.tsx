@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 import useGetGroups from "@/hooks/use-get-groups";
 import { removeGroup } from "@/features/group/group-slice";
+import { toast } from "sonner";
 
 export default function FilialTableBody() {
   const { groups } = useSelector((state: RootState) => state.group);
@@ -28,10 +29,12 @@ export default function FilialTableBody() {
 
   const deleteGroup = async (id: string) => {
     try {
-      await apiClient.delete(`groups/delete/${id}`);
+      const res = await apiClient.delete(`groups/delete/${id}`);
       dispatch(removeGroup(id));
+      toast.success(res.data.message)
     } catch (error) {
-      console.log(error);
+      const result = error as Error;
+      toast.error(result.message);
     }
   };
 
@@ -43,11 +46,11 @@ export default function FilialTableBody() {
       {groups !== null && groups[0] ? (
         groups.map((group) => {
           return (
-            <tr key={group._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{group.title}</td>
-              <td className="py-2 font-bold">{group.teacher?.name}</td>
-              <td className="py-2 font-bold">{group.subject?.title}</td>
-              <td className="py-2 font-bold">{group.filial.title}</td>
+            <tr key={group?._id} className="border-t border-t-[#a6b3c4]">
+              <td className="py-2 font-bold">{group?.title}</td>
+              <td className="py-2 font-bold">{group?.teacher?.name}</td>
+              <td className="py-2 font-bold">{group?.subject?.title}</td>
+              <td className="py-2 font-bold">{group?.filial?.title}</td>
               <td className="text-right py-2">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -66,13 +69,13 @@ export default function FilialTableBody() {
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <GroupForm
-                          id={group._id}
-                          title={group.title}
+                          id={group?._id}
+                          title={group?.title}
                         />
                       </DialogContent>
                     </Dialog>
 
-                    <Button onClick={() => deleteGroup(group._id)} className="text-red-600" variant={"link"}>
+                    <Button onClick={() => deleteGroup(group?._id)} className="text-red-600" variant={"link"}>
                       delete
                     </Button>
                   </PopoverContent>

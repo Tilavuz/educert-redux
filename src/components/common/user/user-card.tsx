@@ -7,6 +7,7 @@ import { Edit, Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import UserForm from "./user-form";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function UserCard({ _id, name, lastname, photo, filial }: UserInterface) {
@@ -15,10 +16,12 @@ export default function UserCard({ _id, name, lastname, photo, filial }: UserInt
 
   const deleteUser = async () => {
     try {
-      await apiClient.delete(`/users/delete/${_id}`);
+      const res = await apiClient.delete(`/users/delete/${_id}`);
       dispatch(removeUser(_id ? _id : ""));
+      toast.success(res.data.message)
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 

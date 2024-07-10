@@ -8,48 +8,48 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import RoomForm from "./room-form";
+import TimeForm from "./time-form";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { useEffect } from "react";
+import { apiClient } from "@/api/api-client";
+import { removeTime } from "@/features/time/time-slice";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { useEffect } from "react";
-import useGetRooms from "@/hooks/use-get-rooms";
-import { apiClient } from "@/api/api-client";
-import { removeRoom } from "@/features/room/room-slice";
+import useGetTimes from "@/hooks/use-get-times";
 import { toast } from "sonner";
 
-export default function TableBody() {
-  const { rooms } = useSelector((state: RootState) => state.room);
-  const { getAllRooms } = useGetRooms()
-  const dispatch = useDispatch()
+export default function TimeTableBody() {
+  const { times } = useSelector((state: RootState) => state.time);
+  const dispatch = useDispatch();
+  const { getAllTimes } = useGetTimes();
 
-  useEffect(() => {
-    getAllRooms()
-  }, [getAllRooms])
-
-  const deleteRoom = async (id: string) => {
+  const deleteTime = async (id: string) => {
     try {
-      const res = await apiClient.delete(`/rooms/delete/${id}`);
-      dispatch(removeRoom(id));
+      const res = await apiClient.delete(`times/delete/${id}`);
       toast.success(res.data.message)
+      dispatch(removeTime(id));
     } catch (error) {
       const result = error as Error
       toast.error(result.message)
     }
   };
 
+  useEffect(() => {
+    getAllTimes();
+  }, [getAllTimes]);
   return (
     <>
-      {rooms !== null && rooms[0] ? (
-        rooms.map((room) => {
+      {times !== null && times[0] ? (
+        times.map((time) => {
           return (
-            <tr key={room?._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{typeof room?.filial === 'object' ? room?.filial?.title : ""}</td>
-              <td className="py-2 font-bold">{room?.number}</td>
+            <tr key={time?._id} className="border-t border-t-[#a6b3c4]">
+              <td className="py-2 font-bold">{time?.start}</td>
+              <td className="py-2 font-bold">{time?.end}</td>
+              <td className="py-2 font-bold">{time?.filial?.title}</td>
               <td className="text-right py-2">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -64,13 +64,22 @@ export default function TableBody() {
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Filialni tahrirlash</DialogTitle>
+                          <DialogTitle>Timeni tahrirlash</DialogTitle>
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <RoomForm id={room?._id} number={room?.number} />
+                        <TimeForm
+                          id={time?._id}
+                          start={time?.start}
+                          end={time?.end}
+                        />
                       </DialogContent>
                     </Dialog>
-                    <Button onClick={() => deleteRoom(room?._id)} className="text-red-600" variant={"link"}>
+
+                    <Button
+                      onClick={() => deleteTime(time?._id)}
+                      className="text-red-600"
+                      variant={"link"}
+                    >
                       delete
                     </Button>
                   </PopoverContent>

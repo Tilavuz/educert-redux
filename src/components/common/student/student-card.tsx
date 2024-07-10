@@ -15,6 +15,7 @@ import { removeStudent } from "@/features/student/student-slice";
 import { StudentInterface } from "@/interfaces/auth-interface";
 import { useDispatch } from "react-redux";
 import StudentForm from "./student-form";
+import { toast } from "sonner";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function StudentCard({
@@ -29,10 +30,12 @@ export default function StudentCard({
   const dispatch = useDispatch();
   const deleteStudent = async () => {
     try {
-      await apiClient.delete(`/students/delete/${_id}`);
+      const res = await apiClient.delete(`/students/delete/${_id}`);
       dispatch(removeStudent(_id ? _id : ""));
+      toast.success(res.data.message)
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 
@@ -55,8 +58,8 @@ export default function StudentCard({
           </p>
         </div>
         <p className="flex font-sans text-sm text-gray-700 flex-col">
-          <span>{subjects?.map((subject) => subject.title).join(", ")}</span>
-          <span>{groups?.map((group) => group.title).join(", ")}</span>
+          <span>{subjects?.map((subject) => subject?.title).join(", ")}</span>
+          <span>{groups?.map((group) => group?.title).join(", ")}</span>
         </p>
       </div>
       <div className="p-6 pt-0 flex items-center">

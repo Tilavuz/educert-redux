@@ -9,7 +9,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { addStudent, changeStudent } from "@/features/student/student-slice";
 import useGetFilials from "@/hooks/use-get-filials";
 import useGetGroups from "@/hooks/use-get-groups";
@@ -17,6 +24,7 @@ import useGetSubjects from "@/hooks/use-get-subjects";
 import { CornerRightDown } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function StudentForm({
   id,
@@ -35,15 +43,14 @@ export default function StudentForm({
   const [checkSubjects, setCheckSubjects] = useState<string[]>([]);
   const [filial, setFilial] = useState<string | null>(null);
 
-
   const { filials } = useSelector((state: RootState) => state.filial);
-  const { groups } = useSelector((state: RootState) => state.group)
+  const { groups } = useSelector((state: RootState) => state.group);
   const { subjects } = useSelector((state: RootState) => state.subject);
 
   const dispatch = useDispatch();
   const { getAllFilials } = useGetFilials();
-  const { getAllGroups } = useGetGroups()
-  const { getAllSubjects } = useGetSubjects()
+  const { getAllGroups } = useGetGroups();
+  const { getAllSubjects } = useGetSubjects();
 
   const handleGroupCheckbox = (e: boolean, id: string) => {
     if (e) {
@@ -94,29 +101,32 @@ export default function StudentForm({
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(changeStudent(res.data.student));
+        if (res.data.student) {
+          dispatch(changeStudent(res.data.student));
+          toast.success(res.data.message);
+          return;
+        }
+        toast.error(res.data.message);
         return;
       }
 
-      if (
-        !id &&
-        studentData.auth &&
-        studentData.filial &&
-        studentData.name &&
-        studentData.lastname &&
-        studentData.groups &&
-        studentData.subjects
-      ) {
+      if (!id) {
         const res = await apiClient.post("/students/add", studentData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(addStudent(res.data.student));
+        if (res.data.student) {
+          dispatch(addStudent(res.data.student));
+          toast.success(res.data.message);
+          return;
+        }
+        toast.error(res.data.message);
         return;
       }
     } catch (error) {
-      console.log(error);
+      const result = error as Error;
+      toast.error(result.message);
     }
   };
 

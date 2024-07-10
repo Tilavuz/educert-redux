@@ -16,6 +16,7 @@ import { RootState } from "@/app/store";
 import useGetFilials from "@/hooks/use-get-filials";
 import useGetSubjects from "@/hooks/use-get-subjects";
 import useGetTeachers from "@/hooks/use-get-teachers";
+import { toast } from "sonner";
 
 export default function GroupForm({
   id,
@@ -56,20 +57,30 @@ export default function GroupForm({
         teacher,
       };
 
-      if (id && groupData.title) {
+      if (id) {
         const res = await apiClient.put(`groups/update/${id}`, groupData);
-        dispatch(changeGroup(res.data.group));
+        if(res.data.group) {
+          dispatch(changeGroup(res.data.group));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
 
-      if (groupData.title && !id) {
+      if (!id) {
         const res = await apiClient.post("/groups/add", groupData)
-        console.log(res.data);
-        dispatch(addGroup(res.data.group));
+        if (res.data.group) {
+          dispatch(addGroup(res.data.group));
+          toast.success(res.data.message);
+          return;
+        }
+        toast.error(res.data.message);
         return;
       }
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 

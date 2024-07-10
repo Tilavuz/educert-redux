@@ -14,6 +14,7 @@ import { addSubject, changeSubject } from "@/features/subject/subject-slice";
 import useGetFilials from "@/hooks/use-get-filials";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function SubjectForm({
   id,
@@ -46,27 +47,38 @@ export default function SubjectForm({
         filial,
       };
 
-      if (id && subjectData.title && subjectData.filial) {
+      if (id) {
         const res = await apiClient.put(`subjects/update/${id}`, subjectData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(changeSubject(res.data.subject));
+        if(res.data.subject) {
+          dispatch(changeSubject(res.data.subject));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
 
-      if (subjectData.title && !id) {
+      if (!id) {
         const res = await apiClient.post("/subjects/add", subjectData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(addSubject(res.data.subject));
+        if(res.data.subject) {
+          dispatch(addSubject(res.data.subject));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 

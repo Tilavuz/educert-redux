@@ -21,7 +21,7 @@ export interface SubjectInterface {
 
 export interface TimeInterface {
     _id: string;
-    filial: string;
+    filial: FilialInterface | null;
     start: string;
     end: string;
 }

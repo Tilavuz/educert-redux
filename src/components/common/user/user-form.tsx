@@ -14,6 +14,7 @@ import useGetFilials from "@/hooks/use-get-filials";
 import { CornerRightDown } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function UserForm({
   id,
@@ -66,27 +67,34 @@ export default function UserForm({
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(changeUser(res.data.user));
+        if(res.data.user) {
+          dispatch(changeUser(res.data.user));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
 
       if (
-        !id &&
-        userData.auth &&
-        userData.filial &&
-        userData.name &&
-        userData.lastname
+        !id
       ) {
         const res = await apiClient.post("/users/add", userData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(addUser(res.data.user));
+        if(res.data.user) {
+          dispatch(addUser(res.data.user));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 

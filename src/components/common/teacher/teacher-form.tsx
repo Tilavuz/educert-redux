@@ -17,6 +17,7 @@ import {
 import { CornerRightDown } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function TeacherForm({
   id,
@@ -76,17 +77,17 @@ export default function TeacherForm({
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(changeTeacher(res.data.teacher));
+        if(res.data.teacher) {
+          dispatch(changeTeacher(res.data.teacher));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
         return;
       }
 
       if (
-        !id &&
-        teacherData.about &&
-        teacherData.filial.length > 0 &&
-        teacherData.grade &&
-        teacherData.lastname &&
-        teacherData.name
+        !id
       ) {
         dispatch(isTeacherPending());
         const res = await apiClient.post("/teachers/add", teacherData, {
@@ -94,10 +95,17 @@ export default function TeacherForm({
             "Content-Type": "multipart/form-data",
           },
         });
-        dispatch(addTeacher(res.data.teacher));
+        if(res.data.teacher) {
+          dispatch(addTeacher(res.data.teacher));
+          toast.success(res.data.message)
+          return
+        }
+        toast.error(res.data.message)
+        return
       }
     } catch (error) {
-      console.log(error);
+      const result = error as Error
+      toast.error(result.message)
     }
   };
 

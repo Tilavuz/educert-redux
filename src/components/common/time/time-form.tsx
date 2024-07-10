@@ -2,53 +2,57 @@ import { Input } from "@/components/ui/input";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
+import { addTime, changeTime } from "@/features/time/time-slice";
 import { apiClient } from "@/api/api-client";
+import { toast } from "sonner";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RootState } from "@/app/store";
 import useGetFilials from "@/hooks/use-get-filials";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { addRoom, changeRoom } from "@/features/room/room-slice";
-import { toast } from "sonner";
 
-export default function RoomForm({
+export default function TimeForm({
   id,
-  number,
+  start,
+  end,
 }: {
   id?: string;
-  number?: number;
+  start?: string;
+  end?: string;
 }) {
-  const numberRef = useRef<HTMLInputElement>(null);
+  const startRef = useRef<HTMLInputElement>(null);
+  const endRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [filial, setFilial] = useState<string | null>(null);
+
   const { filials } = useSelector((state: RootState) => state.filial);
   const { getAllFilials } = useGetFilials();
 
-  useEffect(() => {
-    getAllFilials();
-  }, [getAllFilials]);
+
+  useEffect(() => {getAllFilials()}, [getAllFilials]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const roomData = {
-        number: numberRef?.current?.value,
-        filial
+      const timeData = {
+        start: startRef?.current?.value,
+        end: endRef?.current?.value,
+        filial,
       };
 
       if (id) {
-        const res = await apiClient.put(`rooms/update/${id}`, roomData);
-        if(res.data.room) {
-          dispatch(changeRoom(res.data.room));
-          toast.success(res.data.message)
+        const res = await apiClient.put(`times/update/${id}`, timeData);
+        if (res.data.time) {
+          dispatch(changeTime(res.data.time));
+          toast.success(res.data.message);
           return;
         }
-        toast.error(res.data.message)
-        return
+        toast.error(res.data.message);
+        return;
       }
 
       if (!id) {
-        const res = await apiClient.post("/rooms/add", roomData);
-        if (res.data.room) {
-          dispatch(addRoom(res.data.room));
+        const res = await apiClient.post("/times/add", timeData);
+        if (res.data.time) {
+          dispatch(addTime(res.data.time));
           toast.success(res.data.message);
           return;
         }
@@ -56,18 +60,24 @@ export default function RoomForm({
         return;
       }
     } catch (error) {
-      const result = error as Error
-      toast.error(result.message)
+      const result = error as Error;
+      toast.error(result.message);
     }
   };
 
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
       <Input
-        type="number"
-        defaultValue={number ? number : ""}
-        ref={numberRef}
-        placeholder="Raqami"
+        type="time"
+        defaultValue={start ? start : ""}
+        ref={startRef}
+        placeholder="Nom"
+      />
+      <Input
+        type="time"
+        defaultValue={end ? end : ""}
+        ref={endRef}
+        placeholder="Joylashuv"
       />
       <Select onValueChange={(e) => setFilial(e)}>
         <SelectTrigger>
@@ -77,8 +87,8 @@ export default function RoomForm({
           <SelectGroup>
             {filials?.map((filial) => {
               return (
-                <SelectItem key={filial?._id} value={filial?._id}>
-                  {filial?.title} / {filial?.address}
+                <SelectItem key={filial._id} value={filial._id}>
+                  {filial.title} / {filial.address}
                 </SelectItem>
               );
             })}

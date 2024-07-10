@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { actionToken } from "@/helpers/action-token";
 import useGetAuth from "@/hooks/use-get-auth";
+import { toast } from "sonner";
 
 export default function Login() {
   const phoneRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const { auth, loading } = useSelector((state: RootState) => state.auth);
+  const { auth, loading, error } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setToken } = actionToken;
@@ -44,10 +45,11 @@ export default function Login() {
       setToken("token", res.data.token);
       dispatch(loginSuccess(res.data));
       navigate("/");
-    } catch (error) {
+    } catch (err) {
       dispatch(
-        loginFail(error instanceof Error ? error.message : "Server error!")
+        loginFail(err instanceof Error ? err.message : "Server error!")
       );
+      toast.error(error)
     }
   };
 
