@@ -57,7 +57,7 @@ export default function App() {
           path: "/students",
           element: (
             <Suspense fallback={<Loader />}>
-              <p>page</p>
+              <Students />
             </Suspense>
           ),
         },

@@ -1,4 +1,4 @@
-import { FilialInterface } from "./filial-interface";
+import { FilialInterface, GroupInterface, SubjectInterface } from "./filial-interface";
 
 export interface AuthInterface {
   _id: string;
@@ -30,10 +30,11 @@ export interface TeacherInterface {
 
 export interface StudentInterface {
     _id: string;
-    auth: string;
+    auth?: string;
     name: string;
     lastname: string;
-    filial: string;
-    subjects: string[];
-    groups: string[];
+    filial: FilialInterface | null;
+    subjects: SubjectInterface[] | null;
+    groups: GroupInterface[] | null;
+    photo?: string
 }

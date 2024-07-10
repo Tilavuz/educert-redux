@@ -27,7 +27,7 @@ export default function UserCard({ _id, name, lastname, photo, filial }: UserInt
       <div className="h-[200px] w-full overflow-hidden">
         <img
           className="rounded-t-lg object-cover object-center w-full h-full"
-          src={`${apiUrl.slice(0, 22)}${photo}`}
+          src={`${apiUrl.slice(0, 22)}uploads/users/${photo}`}
           alt="image"
         />
       </div>

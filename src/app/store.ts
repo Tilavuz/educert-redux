@@ -6,6 +6,7 @@ import subjectReducer from '@/features/subject/subject-slice'
 import roomReducer from '@/features/room/room-slice'
 import groupReducer from '@/features/group/group-slice'
 import userReducer from '@/features/user/user-slice'
+import studentReducer from "@/features/student/student-slice";
 
 
 export const store = configureStore({
@@ -16,7 +17,8 @@ export const store = configureStore({
         subject: subjectReducer,
         room: roomReducer,
         group: groupReducer,
-        user: userReducer
+        user: userReducer,
+        student: studentReducer
     }
 })
 

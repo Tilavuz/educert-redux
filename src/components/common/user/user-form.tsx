@@ -60,14 +60,7 @@ export default function UserForm({
         photo: photoRef?.current?.files ? photoRef?.current?.files[0] : null,
       };
 
-      if (
-        id &&
-        userData.auth &&
-        userData.filial &&
-        userData.name &&
-        userData.lastname &&
-        userData.photo
-      ) {
+      if (id) {
         const res = await apiClient.put(`users/update/${id}`, userData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -82,7 +75,7 @@ export default function UserForm({
         userData.auth &&
         userData.filial &&
         userData.name &&
-        userData.lastname && userData.photo
+        userData.lastname
       ) {
         const res = await apiClient.post("/users/add", userData, {
           headers: {
@@ -117,7 +110,7 @@ export default function UserForm({
         type="text"
         placeholder="Familya"
       />
-      <Input required ref={photoRef} type="file" />
+      <Input ref={photoRef} type="file" />
       <Popover>
         <PopoverTrigger asChild>
           <Button
