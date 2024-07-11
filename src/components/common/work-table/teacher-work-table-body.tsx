@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import WorkTableForm from "./work-table-form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { useEffect } from "react";
@@ -20,12 +19,18 @@ import {
 } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { removeWorkTable } from "@/features/worktable/work-table-slice";
-import useGetWorkTables from "@/hooks/use-get-worktables";
+import { useNavigate, useParams } from "react-router-dom";
+import useGetWorktablesTeacher from "@/hooks/use-get-worktables-teacher";
+import TeacherWorkTableForm from "./teacher-work-table-form";
 
-export default function TimeTableBody() {
-  const { worktables } = useSelector((state: RootState) => state.worktable);
+export default function TeacherWorkTableBody() {
+  const { id } = useParams();
+  const { worktablesTeacher } = useSelector(
+    (state: RootState) => state.worktable
+  );
   const dispatch = useDispatch();
-  const { getAllWorkTables } = useGetWorkTables();
+  const { getWorktablesOneTeacher } = useGetWorktablesTeacher();
+  const navigate = useNavigate();
 
   const deleteWorkTime = async (id: string) => {
     try {
@@ -39,15 +44,22 @@ export default function TimeTableBody() {
   };
 
   useEffect(() => {
-    getAllWorkTables();
-  }, [getAllWorkTables]);
+    getWorktablesOneTeacher(id ?? "");
+  }, [id]);
   return (
     <>
-      {worktables !== null && worktables[0] ? (
-        worktables.map((time) => {
+      {worktablesTeacher !== null && worktablesTeacher[0] ? (
+        worktablesTeacher.map((time) => {
           return (
             <tr key={time?._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">
+              <td
+                onClick={() =>
+                  navigate(`/teachers/${time?.teacher?._id}`, {
+                    state: `${time?.teacher?.name}-${time?.teacher?.lastname}`,
+                  })
+                }
+                className="py-2 font-bold  cursor-pointer select-none"
+              >
                 {time?.teacher?.name}-{time?.teacher?.lastname}
               </td>
               <td className="py-2 font-bold">{time?.day}</td>
@@ -70,7 +82,7 @@ export default function TimeTableBody() {
                           <DialogTitle>Timeni tahrirlash</DialogTitle>
                           <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <WorkTableForm
+                        <TeacherWorkTableForm
                           id={time?._id}
                           start={time?.start}
                           end={time?.end}

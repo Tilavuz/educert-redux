@@ -5,14 +5,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface WorkTableState {
     loading: boolean,
     error: string | null,
-    worktables: WorkTableInterface[] | null
+    worktables: WorkTableInterface[] | null,
+    worktablesTeacher: WorkTableInterface[] | null
 }
 
 const initialState: WorkTableState = {
-    loading: false,
-    error: null,
-    worktables: null
-}
+  loading: false,
+  error: null,
+  worktables: null,
+  worktablesTeacher: null
+};
 
 const worktableSlice = createSlice({
   name: "worktable",
@@ -36,12 +38,17 @@ const worktableSlice = createSlice({
     },
     removeWorkTable: (state, action: PayloadAction<string>) => {
       if (state.worktables) {
-        state.worktables = state.worktables.filter((worktable) => worktable._id !== action.payload);
+        state.worktables = state.worktables.filter(
+          (worktable) => worktable._id !== action.payload
+        );
       }
       state.loading = false;
     },
     getWorkTables: (state, action: PayloadAction<WorkTableInterface[]>) => {
       state.worktables = action.payload;
+    },
+    getWorkTablesTeacher: (state, action: PayloadAction<WorkTableInterface[]>) => {
+      state.worktablesTeacher = action.payload;
     },
     isWorkTablePending: (state) => {
       (state.loading = true), (state.error = null);
@@ -53,6 +60,14 @@ const worktableSlice = createSlice({
 });
 
 
-export const  { addWorkTable, changeWorkTable, getWorkTables, removeWorkTable, isWorkTablePending, workTablefial } = worktableSlice.actions
+export const {
+  addWorkTable,
+  changeWorkTable,
+  getWorkTables,
+  removeWorkTable,
+  isWorkTablePending,
+  workTablefial,
+  getWorkTablesTeacher,
+} = worktableSlice.actions;
 
 export default worktableSlice.reducer

@@ -25,6 +25,7 @@ import { apiClient } from "@/api/api-client";
 import { useDispatch } from "react-redux";
 import { removeTeacher } from "@/features/teacher/teacher-slice";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function TeacherCard({
@@ -44,7 +45,9 @@ export default function TeacherCard({
   filial: FilialInterface[];
   id: string;
 }) {
+
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const deleteTeacher = async () => {
     try {
       const res = await apiClient.delete(`/teachers/delete/${id}`);
@@ -61,9 +64,12 @@ export default function TeacherCard({
       <div className="flex justify-between">
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img
-            className="shadow-sm object-cover object-center w-full h-full"
+            className="shadow-sm object-cover object-center w-full h-full cursor-pointer"
             src={`${apiUrl.slice(0, 25)}/uploads/teachers/${photo}`}
             alt="teacher profile"
+            onClick={() => navigate(`/teachers/${id}`, {
+              state: `${name}-${lastname}`
+            })}
           />
         </div>
         <ul className="flex flex-col flex-1 p-2">

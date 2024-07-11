@@ -9,6 +9,7 @@ import userReducer from '@/features/user/user-slice'
 import studentReducer from "@/features/student/student-slice";
 import timeReducer from "@/features/time/time-slice";
 import workTableReducer from "@/features/worktable/work-table-slice";
+import menuReducer from "@/features/menu/menu-slice";
 
 
 export const store = configureStore({
@@ -22,7 +23,8 @@ export const store = configureStore({
         user: userReducer,
         student: studentReducer,
         time: timeReducer,
-        worktable: workTableReducer
+        worktable: workTableReducer,
+        menu: menuReducer
     }
 })
 

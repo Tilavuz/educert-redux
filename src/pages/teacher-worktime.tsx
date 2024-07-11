@@ -1,13 +1,13 @@
 import TableHead from "@/components/common/table-head";
-import WorkTableBody from "@/components/common/work-table/work-table-body";
-import WorkTableForm from "@/components/common/work-table/work-table-form";
+import TeacherWorkTableBody from "@/components/common/work-table/teacher-work-table-body";
+import TeacherWorkTableForm from "@/components/common/work-table/teacher-work-table-form";
 
-export default function FilialTable() {
+export default function TeacherWorkTime() {
   return (
     <div className="bg-white px-6 py-8 rounded-2xl">
       <div className="">
         <TableHead title="work">
-          <WorkTableForm />
+          <TeacherWorkTableForm />
         </TableHead>
         <table className="w-full">
           <thead>
@@ -28,7 +28,7 @@ export default function FilialTable() {
             </tr>
           </thead>
           <tbody>
-            <WorkTableBody />
+            <TeacherWorkTableBody />
           </tbody>
         </table>
       </div>

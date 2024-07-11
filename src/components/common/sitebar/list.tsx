@@ -1,4 +1,4 @@
-import { BookUser, GraduationCap, House, Table, User, BriefcaseBusiness } from "lucide-react";
+import { BookUser, GraduationCap, House, Table, User } from "lucide-react";
 
 export const list = [
   {
@@ -25,10 +25,5 @@ export const list = [
     route: "/users",
     title: "Users",
     icon: <User />,
-  },
-  {
-    route: "/work-table",
-    title: "Work Table",
-    icon: <BriefcaseBusiness />,
-  },
+  }
 ];
