@@ -40,10 +40,10 @@ export default function StudentCard({
   };
 
   return (
-    <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
-      <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
+    <div className="basis-1/5 flex flex-col text-gray-700 bg-white shadow-md rounded-xl">
+      <div className="mx-4 mt-4 h-[250px] overflow-hidden text-gray-700 bg-white rounded-xl border border-black">
         <img
-          src={`${apiUrl.slice(0, 22)}uploads/students/${photo}`}
+          src={`${apiUrl.slice(0, 25)}/uploads/students/${photo}`}
           alt="card-image"
           className="object-cover w-full h-full"
         />
@@ -58,7 +58,7 @@ export default function StudentCard({
           </p>
         </div>
         <p className="flex font-sans text-sm text-gray-700 flex-col">
-          <span>{subjects?.map((subject) => subject?.title).join(", ")}</span>
+          <span className="border-b">{subjects?.map((subject) => subject?.title).join(", ")}</span>
           <span>{groups?.map((group) => group?.title).join(", ")}</span>
         </p>
       </div>

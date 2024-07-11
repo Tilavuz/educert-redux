@@ -4,8 +4,8 @@ import { list } from "./list";
 
 export default function Sitebar() {
   return (
-    <aside className="w-[365px] border-r h-screen px-6 py-4 select-none">
-      <div className="flex items-center justify-center py-6 border-b border-b-[#ccc] mb-6">
+    <aside className="w-[365px] border-r h-screen py-4 select-none">
+      <div className="flex items-center justify-center pb-2 border-b border-b-[#ccc] mb-6">
         <Link className="font-bold" to={'/'}>EDUCERT DASHBOARD</Link>
       </div>
       <div>

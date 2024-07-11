@@ -62,7 +62,7 @@ export default function TeacherCard({
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img
             className="shadow-sm object-cover object-center w-full h-full"
-            src={`${apiUrl.slice(0, 22)}uploads/teachers/${photo}`}
+            src={`${apiUrl.slice(0, 25)}/uploads/teachers/${photo}`}
             alt="teacher profile"
           />
         </div>

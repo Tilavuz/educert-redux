@@ -8,6 +8,7 @@ import groupReducer from '@/features/group/group-slice'
 import userReducer from '@/features/user/user-slice'
 import studentReducer from "@/features/student/student-slice";
 import timeReducer from "@/features/time/time-slice";
+import workTableReducer from "@/features/worktable/work-table-slice";
 
 
 export const store = configureStore({
@@ -20,7 +21,8 @@ export const store = configureStore({
         group: groupReducer,
         user: userReducer,
         student: studentReducer,
-        time: timeReducer
+        time: timeReducer,
+        worktable: workTableReducer
     }
 })
 

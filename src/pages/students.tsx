@@ -41,7 +41,7 @@ export default function Students() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex items-start justify-start gap-4 flex-wrap pl-4">
+      <div className="flex flex-wrap gap-2">
         {students !== null &&
           students[0] &&
           students.map((student) => {

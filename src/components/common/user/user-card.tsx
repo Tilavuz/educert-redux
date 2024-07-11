@@ -26,11 +26,11 @@ export default function UserCard({ _id, name, lastname, photo, filial }: UserInt
   };
 
   return (
-    <div className="max-w-[300px] w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="basis-1/6 w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="h-[200px] w-full overflow-hidden">
         <img
           className="rounded-t-lg object-cover object-center w-full h-full"
-          src={`${apiUrl.slice(0, 22)}uploads/users/${photo}`}
+          src={`${apiUrl.slice(0, 25)}/uploads/users/${photo}`}
           alt="image"
         />
       </div>

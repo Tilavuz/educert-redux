@@ -12,10 +12,12 @@ const Tables = lazy(() => import("@/pages/tables/tables"));
 const Teachers = lazy(() => import("@/pages/teachers"));
 const Students = lazy(() => import("@/pages/students"))
 const Users = lazy(() => import("@/pages/users"))
+const WorkTable = lazy(() => import("@/pages/tables/work-table"));
 
 // Components
 import Loader from "@/components/common/loader";
-import PrivateRoute from "./private/private-route";
+import PrivateRoute from "@/private/private-route";
+
 // import AuthPrivateRoute from "./private/private-auth";
 
 export default function App() {
@@ -62,28 +64,36 @@ export default function App() {
           ),
         },
         {
-          path: '/students',
+          path: "/students",
           element: (
             <Suspense fallback={<Loader />}>
               <Students />
             </Suspense>
-          )
+          ),
         },
         {
-          path: '/users',
+          path: "/users",
           element: (
             <Suspense fallback={<Loader />}>
               <Users />
             </Suspense>
-          )
-        }
+          ),
+        },
+        {
+          path: "/work-table",
+          element: (
+            <Suspense fallback={<Loader />}>
+              <WorkTable />
+            </Suspense>
+          ),
+        },
       ],
     },
     {
       path: "/login",
       element: (
         // <AuthPrivateRoute>
-          <Login />
+        <Login />
         // </AuthPrivateRoute>
       ),
       errorElement: (
