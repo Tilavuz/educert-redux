@@ -5,12 +5,14 @@ export interface TimeState {
   times: TimeInterface[] | null;
   loading: boolean;
   error: string | null;
+  filialTimes: TimeInterface[] | null
 }
 
 const initialState: TimeState = {
   times: null,
   loading: false,
   error: null,
+  filialTimes: null,
 };
 
 const timeSlice = createSlice({
@@ -42,6 +44,9 @@ const timeSlice = createSlice({
     getTimes: (state, action: PayloadAction<TimeInterface[]>) => {
       state.times = action.payload;
     },
+    getFilialTimes: (state, action: PayloadAction<TimeInterface[]>) => {
+      state.filialTimes = action.payload;
+    },
     isTimePending: (state) => {
       (state.loading = true), (state.error = null);
     },
@@ -51,7 +56,14 @@ const timeSlice = createSlice({
   },
 });
 
-export const { addTime, changeTime, getTimes, isTimePending, timefial, removeTime } =
-  timeSlice.actions;
+export const {
+  addTime,
+  changeTime,
+  getTimes,
+  isTimePending,
+  timefial,
+  removeTime,
+  getFilialTimes,
+} = timeSlice.actions;
 
 export default timeSlice.reducer;

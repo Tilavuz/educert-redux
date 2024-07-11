@@ -10,23 +10,25 @@ import studentReducer from "@/features/student/student-slice";
 import timeReducer from "@/features/time/time-slice";
 import workTableReducer from "@/features/worktable/work-table-slice";
 import menuReducer from "@/features/menu/menu-slice";
+import schduleReducer from "@/features/schdule/schdule-slice";
 
 
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        filial: filialReducer,
-        teacher: teacherReducer,
-        subject: subjectReducer,
-        room: roomReducer,
-        group: groupReducer,
-        user: userReducer,
-        student: studentReducer,
-        time: timeReducer,
-        worktable: workTableReducer,
-        menu: menuReducer
-    }
-})
+  reducer: {
+    auth: authReducer,
+    filial: filialReducer,
+    teacher: teacherReducer,
+    subject: subjectReducer,
+    room: roomReducer,
+    group: groupReducer,
+    user: userReducer,
+    student: studentReducer,
+    time: timeReducer,
+    worktable: workTableReducer,
+    menu: menuReducer,
+    schdule: schduleReducer,
+  },
+});
 
 
 export type RootState = ReturnType<typeof store.getState>

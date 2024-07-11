@@ -12,8 +12,8 @@ const Tables = lazy(() => import("@/pages/tables/tables"));
 const Teachers = lazy(() => import("@/pages/teachers"));
 const Students = lazy(() => import("@/pages/students"))
 const Users = lazy(() => import("@/pages/users"))
-const WorkTable = lazy(() => import("@/pages/tables/work-table"));
 const TeacherWorktime = lazy(() => import("@/pages/teacher-worktime"));
+const Schedule = lazy(() => import("@/pages/schedule"));
 
 // Components
 import Loader from "@/components/common/loader";
@@ -81,18 +81,18 @@ export default function App() {
           ),
         },
         {
-          path: "/work-table",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <WorkTable />
-            </Suspense>
-          ),
-        },
-        {
           path: "/teachers/:id",
           element: (
             <Suspense fallback={<Loader />}>
               <TeacherWorktime />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/class-schedule",
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Schedule />
             </Suspense>
           ),
         },
