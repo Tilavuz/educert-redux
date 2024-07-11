@@ -14,10 +14,10 @@ const PrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   
   useEffect(() => {
     const token = getToken('token');
-    if (token) {
+    if (token !== null || token !== 'null') {
       getAuth();
     }
-  }, [getAuth, getToken]);
+  }, [getAuth, getToken, auth]);
 
   const handleAuth = () => {
     const token = getToken("token")

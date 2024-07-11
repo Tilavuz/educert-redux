@@ -28,7 +28,7 @@ export default function Login() {
   }, [getAuth])
 
   useEffect(() => {
-    if (auth) {
+    if (auth?._id) {
       navigate("/");
     }
   }, [auth, navigate]);
