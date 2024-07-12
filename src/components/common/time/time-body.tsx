@@ -49,6 +49,7 @@ export default function TimeTableBody() {
             <tr key={time?._id} className="border-t border-t-[#a6b3c4]">
               <td className="py-2 font-bold">{time?.start}</td>
               <td className="py-2 font-bold">{time?.end}</td>
+              <td className="py-2 font-bold">{time?.day}</td>
               <td className="py-2 font-bold">{time?.filial?.title}</td>
               <td className="text-right py-2">
                 <Popover>

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RootState } from "@/app/store";
 import useGetFilials from "@/hooks/use-get-filials";
+import { days } from "@/helpers/days";
 
 export default function TimeForm({
   id,
@@ -22,6 +23,7 @@ export default function TimeForm({
   const endRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [filial, setFilial] = useState<string | null>(null);
+  const [day, setDay] = useState<string>();
 
   const { filials } = useSelector((state: RootState) => state.filial);
   const { getAllFilials } = useGetFilials();
@@ -36,6 +38,7 @@ export default function TimeForm({
         start: startRef?.current?.value,
         end: endRef?.current?.value,
         filial,
+        day
       };
 
       if (id) {
@@ -89,6 +92,22 @@ export default function TimeForm({
               return (
                 <SelectItem key={filial._id} value={filial._id}>
                   {filial.title} / {filial.address}
+                </SelectItem>
+              );
+            })}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <Select onValueChange={(value) => setDay(value)}>
+        <SelectTrigger>
+          <SelectValue placeholder="Kunlardan birini tanlang!" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {days?.map((day) => {
+              return (
+                <SelectItem className="capitalize" key={day} value={day}>
+                  {day}
                 </SelectItem>
               );
             })}

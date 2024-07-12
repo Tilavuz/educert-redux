@@ -45,7 +45,7 @@ export default function TeacherWorkTableBody() {
 
   useEffect(() => {
     getWorktablesOneTeacher(id ?? "");
-  }, [id]);
+  }, [id, getWorktablesOneTeacher]);
   return (
     <>
       {worktablesTeacher !== null && worktablesTeacher[0] ? (

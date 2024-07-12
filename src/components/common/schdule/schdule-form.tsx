@@ -202,8 +202,8 @@ export default function SchduleForm({
           <SelectGroup>
             {filialTimes?.map((time) => {
               return (
-                <SelectItem key={time._id} value={time._id}>
-                  {time.start} / {time.end}
+                <SelectItem className="capitalize" key={time._id} value={time._id}>
+                  {time.start} / {time.end} / {time.day}
                 </SelectItem>
               );
             })}

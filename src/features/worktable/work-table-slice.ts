@@ -21,24 +21,24 @@ const worktableSlice = createSlice({
   initialState,
   reducers: {
     addWorkTable: (state, action: PayloadAction<WorkTableInterface>) => {
-      if (state.worktables) {
-        state.worktables.push(action.payload);
+      if (state.worktablesTeacher) {
+        state.worktablesTeacher.push(action.payload);
       } else {
-        state.worktables = [action.payload];
+        state.worktablesTeacher = [action.payload];
       }
       state.loading = false;
     },
     changeWorkTable: (state, action: PayloadAction<WorkTableInterface>) => {
-      if (state.worktables) {
-        state.worktables = state.worktables.map((worktable) =>
+      if (state.worktablesTeacher) {
+        state.worktablesTeacher = state.worktablesTeacher.map((worktable) =>
           worktable._id === action.payload._id ? action.payload : worktable
         );
       }
       state.loading = false;
     },
     removeWorkTable: (state, action: PayloadAction<string>) => {
-      if (state.worktables) {
-        state.worktables = state.worktables.filter(
+      if (state.worktablesTeacher) {
+        state.worktablesTeacher = state.worktablesTeacher.filter(
           (worktable) => worktable._id !== action.payload
         );
       }

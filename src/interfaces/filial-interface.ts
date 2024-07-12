@@ -24,6 +24,7 @@ export interface TimeInterface {
     filial: FilialInterface | null;
     start: string;
     end: string;
+    day: string;
 }
 
 export interface GroupInterface {

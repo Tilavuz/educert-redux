@@ -50,7 +50,7 @@ export default function SchduleBody() {
               <td className="py-2 font-bold">{schdule?.filial?.title}</td>
               <td className="py-2 font-bold">{schdule?.time?.start}</td>
               <td className="py-2 font-bold">{schdule?.time?.end}</td>
-              <td className="py-2 font-bold">{schdule?.time?.start}</td>
+              <td className="py-2 font-bold">{schdule?.time?.day}</td>
               <td className="py-2 font-bold">
                 {schdule?.teacher?.name} {schdule?.teacher?.lastname}
               </td>

@@ -19,6 +19,9 @@ export default function TimeTable() {
                 End
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
+                Day
+              </th>
+              <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
                 Filial
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-right py-3"></th>
