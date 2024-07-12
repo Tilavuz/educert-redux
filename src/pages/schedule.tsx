@@ -6,7 +6,7 @@ export default function FilialTable() {
   return (
     <div className="bg-white px-6 py-8 rounded-2xl">
       <div className="">
-        <TableHead title="filial">
+        <TableHead title="lesson">
           <SchduleForm />
         </TableHead>
         <table className="w-full">
@@ -20,6 +20,9 @@ export default function FilialTable() {
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
                 End
+              </th>
+              <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
+                day
               </th>
               <th className="uppercase text-[#A6B3C4] text-xs text-left py-3">
                 Teacher
