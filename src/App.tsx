@@ -10,8 +10,8 @@ import Login from "@/pages/auth/login";
 const ErrorPage = lazy(() => import("@/pages/error-page"));
 const Tables = lazy(() => import("@/pages/tables/tables"));
 const Teachers = lazy(() => import("@/pages/teachers"));
-const Students = lazy(() => import("@/pages/students"))
-const Users = lazy(() => import("@/pages/users"))
+const Students = lazy(() => import("@/pages/students"));
+const Users = lazy(() => import("@/pages/users"));
 const TeacherWorktime = lazy(() => import("@/pages/teacher-worktime"));
 const Schedule = lazy(() => import("@/pages/schedule"));
 
@@ -100,11 +100,7 @@ export default function App() {
     },
     {
       path: "/login",
-      element: (
-        // <AuthPrivateRoute>
-        <Login />
-        // </AuthPrivateRoute>
-      ),
+      element: <Login />,
       errorElement: (
         <Suspense fallback={<Loader />}>
           <ErrorPage />

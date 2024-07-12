@@ -24,10 +24,11 @@ const authSlice = createSlice({
         state.loading = true,
         state.error = null
     },
-    loginSuccess: (state, action: PayloadAction<AuthState['auth']>) => {
+    loginSuccess: (state, action: PayloadAction<AuthInterface>) => {
         state.loading = false,
         state.isLogin = true,
         state.auth = action.payload
+        
     },
     loginFail: (state, action: PayloadAction<string>) => {
         state.error = action.payload,

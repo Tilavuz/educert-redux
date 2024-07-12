@@ -29,7 +29,7 @@ export default function Teachers() {
 
   return (
     <div>
-      <div className="fixed right-20 top-20">
+      <div className="mb-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -45,7 +45,7 @@ export default function Teachers() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex items-start justify-start gap-4 flex-wrap pl-4">
+      <div className="grid grid-cols-5 gap-4">
         {teachers !== null &&
           teachers?.map((teacher) => (
             <TeacherCard

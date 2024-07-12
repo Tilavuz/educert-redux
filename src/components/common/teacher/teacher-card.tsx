@@ -60,7 +60,7 @@ export default function TeacherCard({
   };
 
   return (
-    <div className="max-w-[300px] w-full rounded-md p-2 bg-white">
+    <div className="max-w-[320px] w-full rounded-md p-2 bg-white">
       <div className="flex justify-between">
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img

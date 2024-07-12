@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { actionToken } from "@/helpers/action-token";
 import useGetAuth from "@/hooks/use-get-auth";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 
 export default function Login() {
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -42,9 +42,13 @@ export default function Login() {
         password: passwordRef?.current?.value,
       };
       const res = await apiClient.post("/auth/login", loginData);
-      setToken("token", res.data.token);
-      dispatch(loginSuccess(res.data));
-      navigate("/");
+      if(res.data.token) {
+        setToken("token", res.data.token);
+        dispatch(loginSuccess(res.data.auth));
+        navigate("/");
+        return
+      }
+      toast.error(res.data.message)
     } catch (err) {
       dispatch(
         loginFail(err instanceof Error ? err.message : "Server error!")
@@ -81,6 +85,7 @@ export default function Login() {
           {loading ? "loading..." : "Kirish"}
         </button>
       </form>
+      <Toaster richColors />
     </div>
   );
 }

@@ -11,7 +11,7 @@ export default function RootLayout() {
         <Header />
         <div className="py-8 px-6 h-[92vh] overflow-y-scroll">
           <Outlet />
-          <Toaster expand={true} richColors />
+          <Toaster richColors />
         </div>
       </div>
     </div>

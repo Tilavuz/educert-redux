@@ -25,7 +25,7 @@ export default function Students() {
 
   return (
     <div className="">
-      <div className="fixed right-20 top-20">
+      <div className="mb-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -41,7 +41,7 @@ export default function Students() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-5 gap-4">
         {students !== null &&
           students[0] &&
           students.map((student) => {

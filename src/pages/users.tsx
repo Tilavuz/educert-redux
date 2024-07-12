@@ -25,7 +25,7 @@ export default function Users() {
 
   return (
     <div>
-      <div className="fixed right-20 top-20">
+      <div className="mb-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button>
