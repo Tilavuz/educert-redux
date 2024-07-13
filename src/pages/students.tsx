@@ -10,6 +10,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import useGetGroups from "@/hooks/use-get-groups";
+import useGetStudentsGroup from "@/hooks/use-get-student-group";
 import useGetStudents from "@/hooks/use-get-students";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
@@ -17,18 +27,44 @@ import { useSelector } from "react-redux";
 
 export default function Students() {
   const { getAllStudents } = useGetStudents();
+  const { getAllGroups } = useGetGroups()
+  const { getAllStudentsGroup } = useGetStudentsGroup();
   const { students } = useSelector((state: RootState) => state.student);
+  const { groups } = useSelector((state: RootState) => state.group);
 
-  console.log(students);
-  
+  const handleGroup = (value: string) => {
+    if(value === 'all') {
+      getAllStudents();
+      return
+    }
+    getAllStudentsGroup(value);
+  };
 
   useEffect(() => {
     getAllStudents();
-  }, [getAllStudents]);
+    getAllGroups();
+  }, [getAllStudents, getAllGroups]);
 
   return (
     <div className="">
-      <div className="mb-4">
+      <div className="flex mb-4 items-center gap-4">
+        <Select onValueChange={(value) => handleGroup(value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Grouplardan birini tanlang!" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="all">All</SelectItem>
+              {groups?.map((group) => {
+                return (
+                  <SelectItem key={group._id} value={group._id}>
+                    {group.title}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <Dialog>
           <DialogTrigger asChild>
             <Button className="flex items-center justify-center gap-1 bg-[#4fd1c5] rounded-none hover:bg-green-400">
@@ -46,8 +82,7 @@ export default function Students() {
         </Dialog>
       </div>
       <div className="grid grid-cols-5 gap-4">
-        {students !== null &&
-          students[0] &&
+        {students && students[0] &&
           students.map((student) => {
             return (
               <StudentCard
@@ -56,7 +91,6 @@ export default function Students() {
                 name={student.name}
                 lastname={student.lastname}
                 filial={student.filial}
-                subjects={student.subjects}
                 groups={student.groups}
                 photo={student.photo}
               />

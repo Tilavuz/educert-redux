@@ -44,6 +44,9 @@ const studentSlice = createSlice({
     getStudents: (state, action: PayloadAction<StudentInterface[]>) => {
       state.students = action.payload;
     },
+    getStudentsGroup: (state, action: PayloadAction<StudentInterface[]>) => {
+      state.students = action.payload;
+    },
     isStudentPending: (state) => {
       (state.loading = true), (state.error = null);
     },
@@ -53,6 +56,14 @@ const studentSlice = createSlice({
   },
 });
 
-export const { addStudent, changeStudent, removeStudent, getStudents, isStudentPending, studentfial } = studentSlice.actions;
+export const {
+  addStudent,
+  changeStudent,
+  removeStudent,
+  getStudents,
+  isStudentPending,
+  studentfial,
+  getStudentsGroup,
+} = studentSlice.actions;
 
 export default studentSlice.reducer;

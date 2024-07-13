@@ -23,7 +23,6 @@ export default function StudentCard({
   name,
   lastname,
   filial,
-  subjects,
   groups,
   photo,
 }: StudentInterface) {
@@ -57,9 +56,8 @@ export default function StudentCard({
             {filial?.title}
           </p>
         </div>
-        <p className="flex font-sans text-sm text-gray-700 flex-col">
-          <span className="border-b">{subjects?.map((subject) => subject?.title).join(", ")}</span>
-          <span>{groups?.map((group) => group?.title).join(", ")}</span>
+        <p className="font-sans text-sm text-gray-700">
+          <span>{groups?.map((group) => `${group?.title}-${group?.subject?.title}`).join(", ")}</span>
         </p>
       </div>
       <div className="p-6 pt-0 flex items-center">
