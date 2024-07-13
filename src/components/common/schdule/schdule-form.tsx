@@ -21,17 +21,13 @@ export default function SchduleForm({
 
   const [checkFilial, setCheckFilial] = useState<string>()
   const [checkTime, setCheckTime] = useState<string>()
-  const [checkTeacher, setCheckTeacher] = useState<string>()
   const [checkRoom, setCheckRoom] = useState<string>()
   const [checkGroup, setCheckGroup] = useState<string>()
-  const [checkSubject, setCheckSubject] = useState<string>();
 
   const { filials } = useSelector((state: RootState) => state.filial);
   const { filialTimes } = useSelector((state: RootState) => state.time);
-  const { filialTeachers } = useSelector((state: RootState) => state.teacher);
   const { filialRooms } = useSelector((state: RootState) => state.room);
   const { filialGroups } = useSelector((state: RootState) => state.group);
-  const { filialSubjects } = useSelector((state: RootState) => state.subject);
 
   const {getAllFilials} = useGetFilials()
   const { getGroupsOneFilial } = useGetGroupsFilial();
@@ -62,10 +58,8 @@ export default function SchduleForm({
       const schduleData = {
         filial: checkFilial,
         time: checkTime,
-        teacher: checkTeacher,
         room: checkRoom,
         group: checkGroup,
-        subject: checkSubject,
       };
 
       if (id) {
@@ -127,7 +121,7 @@ export default function SchduleForm({
             {filialGroups?.map((group) => {
               return (
                 <SelectItem key={group._id} value={group._id}>
-                  {group.title}
+                  {group.title} / {group?.teacher?.name} {group?.teacher?.lastname} / {group?.subject?.title}
                 </SelectItem>
               );
             })}
@@ -147,44 +141,6 @@ export default function SchduleForm({
               return (
                 <SelectItem key={room._id} value={room._id}>
                   {room.number}
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <Select
-        onValueChange={(value) => setCheckSubject(value)}
-        disabled={!checkFilial}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Fanlardan birini tanlang!" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {filialSubjects?.map((subject) => {
-              return (
-                <SelectItem key={subject._id} value={subject._id}>
-                  {subject.title}
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <Select
-        onValueChange={(value) => setCheckTeacher(value)}
-        disabled={!checkFilial}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Ustozlardan birini tanlang!" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {filialTeachers?.map((teacher) => {
-              return (
-                <SelectItem key={teacher._id} value={teacher._id}>
-                  {teacher.name}-{teacher.lastname}
                 </SelectItem>
               );
             })}

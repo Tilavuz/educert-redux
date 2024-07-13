@@ -28,8 +28,9 @@ export default function Users() {
       <div className="mb-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button>
-              <Plus />
+            <Button className="flex items-center justify-center gap-1 bg-[#4fd1c5] rounded-none hover:bg-green-400">
+              <Plus size={18} />
+              <span>Qo'shish</span>
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -42,13 +43,18 @@ export default function Users() {
         </Dialog>
       </div>
       <div className="flex items-start justify-start gap-4 flex-wrap pl-4">
-        {
-          users?.map(user => {
-            return (
-              <UserCard key={user._id} _id={user._id} name={user.name} lastname={user.lastname} photo={user.photo} filial={user.filial} />
-            )
-          })
-        }
+        {users?.map((user) => {
+          return (
+            <UserCard
+              key={user._id}
+              _id={user._id}
+              name={user.name}
+              lastname={user.lastname}
+              photo={user.photo}
+              filial={user.filial}
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import TimeForm from "./time-form";
 
 export default function TimeTable() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="time">
           <TimeForm />

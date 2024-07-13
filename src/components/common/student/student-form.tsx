@@ -40,12 +40,10 @@ export default function StudentForm({
   const photoRef = useRef<HTMLInputElement>(null);
   const { auth } = useSelector((state: RootState) => state.auth);
   const [checkGroups, setCheckGroups] = useState<string[]>([]);
-  const [checkSubjects, setCheckSubjects] = useState<string[]>([]);
   const [filial, setFilial] = useState<string | null>(null);
 
   const { filials } = useSelector((state: RootState) => state.filial);
   const { filialGroups } = useSelector((state: RootState) => state.group);
-  const { filialSubjects } = useSelector((state: RootState) => state.subject);
 
   const dispatch = useDispatch();
   const { getAllFilials } = useGetFilials();
@@ -67,21 +65,6 @@ export default function StudentForm({
     }
   };
 
-  const handleSubjectCheckbox = (e: boolean, id: string) => {
-    if (e) {
-      setCheckSubjects((prev) => {
-        if (prev && !prev.includes(id)) {
-          return [...prev, id];
-        }
-        return [id];
-      });
-    } else {
-      setCheckSubjects((prev) => {
-        return prev.filter((subject) => subject !== id);
-      });
-    }
-  };
-
   const handleFilial = (value: string) => {
     setFilial(value)
     getGroupsOneFilial(value)
@@ -95,7 +78,6 @@ export default function StudentForm({
         auth: auth?._id,
         filial,
         groups: checkGroups,
-        subjects: checkSubjects,
         name: nameRef?.current?.value,
         lastname: lastnameRef?.current?.value,
         photo: photoRef?.current?.files ? photoRef?.current?.files[0] : null,
@@ -189,39 +171,12 @@ export default function StudentForm({
           {filialGroups?.map((group) => {
             return (
               <Label className="flex items-center gap-2" key={group._id}>
-                {group.title}
+                {group.title}-{group?.subject?.title}-{group?.teacher?.name}{" "}
+                {group?.teacher?.lastname}
                 <Checkbox
                   checked={checkGroups.includes(group._id)}
                   onCheckedChange={(e: boolean) =>
                     handleGroupCheckbox(e, group._id)
-                  }
-                />
-              </Label>
-            );
-          })}
-        </PopoverContent>
-      </Popover>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            className="flex items-start gap-2"
-            variant={"outline"}
-            type="button"
-            disabled={!filial}
-          >
-            Fanlar
-            <CornerRightDown />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="flex flex-col gap-2 max-h-[160px] overflow-y-auto">
-          {filialSubjects?.map((subject) => {
-            return (
-              <Label className="flex items-center gap-2" key={subject._id}>
-                {subject.title}
-                <Checkbox
-                  checked={checkSubjects.includes(subject._id)}
-                  onCheckedChange={(e: boolean) =>
-                    handleSubjectCheckbox(e, subject._id)
                   }
                 />
               </Label>

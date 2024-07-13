@@ -4,7 +4,7 @@ import RoomForm from "./room-form";
 
 export default function RoomTable() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="room">
           <RoomForm />

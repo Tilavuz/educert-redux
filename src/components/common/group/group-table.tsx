@@ -4,7 +4,7 @@ import GroupForm from "./group-form";
 
 export default function GroupTable() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="group">
           <GroupForm />

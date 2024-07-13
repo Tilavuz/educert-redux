@@ -4,7 +4,7 @@ import TeacherWorkTableForm from "@/components/common/work-table/teacher-work-ta
 
 export default function TeacherWorkTime() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="work">
           <TeacherWorkTableForm />

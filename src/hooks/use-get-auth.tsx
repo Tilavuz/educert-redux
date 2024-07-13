@@ -11,7 +11,11 @@ export default function useGetAuth() {
     try {
       if(!auth) {
         const res = await apiClient.get("/auth");
-        dispatch(loginSuccess(res.data));
+        if(res.data) {
+          dispatch(loginSuccess(res.data));
+          return
+        }
+        throw new Error('Malumot topilmadi!')
       }
     } catch (error) {
       dispatch(loginFail(error instanceof Error ? error.message : "Server error!"))

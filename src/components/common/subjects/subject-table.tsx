@@ -4,7 +4,7 @@ import SubjectForm from "./subject-form";
 
 export default function SubjectTable() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="subject">
           <SubjectForm />

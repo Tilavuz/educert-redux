@@ -4,7 +4,7 @@ import TableHead from "@/components/common/table-head";
 
 export default function FilialTable() {
   return (
-    <div className="bg-white px-6 py-8 rounded-2xl">
+    <div className="bg-white px-6 py-8">
       <div className="">
         <TableHead title="lesson">
           <SchduleForm />

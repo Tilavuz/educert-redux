@@ -21,8 +21,9 @@ export default function TableHead({ children, title }: TableHeadProps) {
       <h2 className="font-bold text-2xl py-2 uppercase">{title} Table</h2>
       <Dialog>
         <DialogTrigger asChild>
-          <Button>
-            <Plus />
+          <Button className="flex items-center justify-center gap-1 bg-[#4fd1c5] rounded-none hover:bg-green-400">
+            <Plus size={18} />
+            <span>Qo'shish</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="bg-white">

@@ -52,11 +52,11 @@ export default function SchduleBody() {
               <td className="py-2 font-bold">{schdule?.time?.end}</td>
               <td className="py-2 font-bold">{schdule?.time?.day}</td>
               <td className="py-2 font-bold">
-                {schdule?.teacher?.name} {schdule?.teacher?.lastname}
+                {schdule?.group?.teacher?.name} {schdule?.group?.teacher?.lastname}
               </td>
               <td className="py-2 font-bold">{schdule?.room?.number}</td>
               <td className="py-2 font-bold">{schdule?.group?.title}</td>
-              <td className="py-2 font-bold">{schdule?.subject?.title}</td>
+              <td className="py-2 font-bold">{schdule?.group?.subject?.title}</td>
               <td className="text-right py-2">
                 <Popover>
                   <PopoverTrigger asChild>

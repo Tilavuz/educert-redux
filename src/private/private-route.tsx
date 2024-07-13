@@ -14,23 +14,19 @@ const PrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
   
   useEffect(() => {
     const token = getToken('token');
-    if (token !== null || token !== 'null') {
+    if (token) {
       getAuth();
     }
   }, [getAuth, getToken, auth]);
 
-  const handleAuth = () => {
     const token = getToken("token")
     if (token && auth) {
       return children;
     } else if (token && !auth && !error) {
       return <Loader />;
-    } else {
-      return <Navigate to="/login" />;
     }
-  };
 
-  return handleAuth();
+    return <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

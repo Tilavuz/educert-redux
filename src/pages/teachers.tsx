@@ -32,8 +32,9 @@ export default function Teachers() {
       <div className="mb-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button>
-              <Plus />
+            <Button className="flex items-center justify-center gap-1 bg-[#4fd1c5] rounded-none hover:bg-green-400">
+              <Plus size={18} />
+              <span>Qo'shish</span>
             </Button>
           </DialogTrigger>
           <DialogContent>
