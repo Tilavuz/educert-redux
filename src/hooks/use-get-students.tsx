@@ -8,13 +8,16 @@ export default function useGetStudents() {
   const { students } = useSelector((state: RootState) => state.student);
   const dispatch = useDispatch();
 
-  const getAllStudents = useCallback(async () => {
+  const getAllStudents = useCallback(async (bool?: boolean) => {
     try {
       if (students === null || !students[0]) {
         const res = await apiClient.get("/students");
         dispatch(getStudents(res.data));
-      } else {
-        return;
+      } else if(bool) {
+        const res = await apiClient.get("/students");
+        dispatch(getStudents(res.data));
+      }else {
+        return
       }
     } catch (error) {
       console.log(error);

@@ -34,7 +34,7 @@ export default function Students() {
 
   const handleGroup = (value: string) => {
     if(value === 'all') {
-      getAllStudents();
+      getAllStudents(true);
       return
     }
     getAllStudentsGroup(value);
