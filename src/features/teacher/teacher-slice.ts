@@ -5,14 +5,16 @@ export interface teacherState {
   loading: boolean;
   teachers: TeacherInterface[] | null;
   error: string | null;
-  filialTeachers: TeacherInterface[] | null
+  filialTeachers: TeacherInterface[] | null,
+  teacher: TeacherInterface | null
 }
 
 const initialState: teacherState = {
   loading: false,
   teachers: null,
   error: null,
-  filialTeachers: null
+  filialTeachers: null,
+  teacher: null
 };
 
 const teacherSlice = createSlice({
@@ -46,6 +48,9 @@ const teacherSlice = createSlice({
     getTeachers: (state, action: PayloadAction<TeacherInterface[]>) => {
       state.teachers = action.payload;
     },
+    getTeacher: (state, action: PayloadAction<TeacherInterface>) => {
+      state.teacher = action.payload;
+    },
     getFilialTeachers: (state, action: PayloadAction<TeacherInterface[]>) => {
       state.filialTeachers = action.payload;
     },
@@ -66,6 +71,7 @@ export const {
   teacherFail,
   changeTeacher,
   getFilialTeachers,
+  getTeacher,
 } = teacherSlice.actions;
 
 export default teacherSlice.reducer;
