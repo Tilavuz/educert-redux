@@ -10,13 +10,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { removeStudent } from "@/features/student/student-slice";
-import { StudentInterface } from "@/interfaces/auth-interface";
 import { useDispatch } from "react-redux";
 import StudentForm from "./student-form";
 import { toast } from "sonner";
-const apiUrl = import.meta.env.VITE_APP_API_URL;
+import { serverUrl } from "@/helpers/shared";
+import { FilialInterface, GroupInterface } from "@/interfaces/filial-interface";
 
 export default function StudentCard({
   _id,
@@ -25,16 +32,25 @@ export default function StudentCard({
   filial,
   groups,
   photo,
-}: StudentInterface) {
+  phone
+}: {
+  _id?: string,
+  name?: string,
+  lastname?: string,
+  filial?: FilialInterface | null,
+  groups?: GroupInterface[] | null,
+  photo?: string,
+  phone?: string
+}) {
   const dispatch = useDispatch();
   const deleteStudent = async () => {
     try {
       const res = await apiClient.delete(`/students/delete/${_id}`);
       dispatch(removeStudent(_id ? _id : ""));
-      toast.success(res.data.message)
+      toast.success(res.data.message);
     } catch (error) {
-      const result = error as Error
-      toast.error(result.message)
+      const result = error as Error;
+      toast.error(result.message);
     }
   };
 
@@ -42,22 +58,51 @@ export default function StudentCard({
     <div className="basis-1/5 flex flex-col text-gray-700 bg-white shadow-md rounded-xl max-w-[340px]">
       <div className="mx-4 mt-4 h-[250px] overflow-hidden text-gray-700 bg-white rounded-xl border border-black">
         <img
-          src={`${apiUrl.slice(0, 25)}/uploads/students/${photo}`}
+          src={`${serverUrl}/uploads/students/${photo}`}
           alt="card-image"
           className="object-cover w-full h-full"
         />
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-2">
-          <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+          <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900 capitalize">
             {name} {lastname}
           </p>
-          <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+          <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900 bg-red-400 text-white p-1 rounded-lg">
             {filial?.title}
           </p>
         </div>
-        <p className="font-sans text-sm text-gray-700">
-          <span>{groups?.map((group) => `${group?.title}-${group?.subject?.title}`).join(", ")}</span>
+        <p className="font-sans text-sm text-gray-700 flex gap-2">
+          {groups?.map((group) => {
+            return (
+              <span
+                className="bg-emerald-300 p-1 rounded-lg text-white font-bold"
+                key={group?._id}
+              >
+                {group?.title}
+              </span>
+            );
+          })}
+          {groups?.map((group) => {
+            return (
+              <span
+                className="bg-red-300 p-1 rounded-lg text-white font-bold"
+                key={group?.subject?._id}
+              >
+                {group?.subject?.title}
+              </span>
+            );
+          })}
+          {groups?.map((group) => {
+            return (
+              <span
+                className="bg-sky-400 p-1 rounded-lg text-white font-bold"
+                key={group?.teacher?._id}
+              >
+                {group?.teacher?.name} {group?.teacher?.lastname}
+              </span>
+            );
+          })}
         </p>
       </div>
       <div className="p-6 pt-0 flex items-center">
@@ -75,7 +120,7 @@ export default function StudentCard({
               <DialogTitle>Ustoz malumotlarini o'zgartirish!</DialogTitle>
               <DialogDescription></DialogDescription>
             </DialogHeader>
-            <StudentForm id={_id} name={name} lastname={lastname} />
+            <StudentForm id={_id} name={name} lastname={lastname} phone={phone} />
           </DialogContent>
         </Dialog>
         <AlertDialog>

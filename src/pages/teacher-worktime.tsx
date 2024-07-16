@@ -1,10 +1,7 @@
 import { RootState } from "@/app/store";
 import TableHead from "@/components/common/table-head";
-import TeacherForm from "@/components/common/teacher/teacher-form";
 import TeacherWorkTableBody from "@/components/common/work-table/teacher-work-table-body";
 import TeacherWorkTableForm from "@/components/common/work-table/teacher-work-table-form";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { serverUrl } from "@/helpers/shared";
 import useGetTeacher from "@/hooks/use-get-teacher";
 import { useEffect } from "react";

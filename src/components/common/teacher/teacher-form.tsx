@@ -25,13 +25,17 @@ export default function TeacherForm({
   lastname,
   about,
   grade,
+  phone
 }: {
   id?: string;
   name?: string;
   lastname?: string;
   about?: string;
   grade?: string;
+  phone?: string
 }) {
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const [checkFilials, setCheckFilials] = useState<string[]>([]);
   const lastnameRef = useRef<HTMLInputElement>(null);
@@ -68,6 +72,8 @@ export default function TeacherForm({
         filial: checkFilials,
         grade: gradeRef?.current?.value,
         auth: auth?._id,
+        phone: phoneRef?.current?.value,
+        password: passwordRef?.current?.value
       };
 
       if (id) {
@@ -111,6 +117,19 @@ export default function TeacherForm({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
+      <Input
+        defaultValue={phone ?? "+998"}
+        required
+        ref={phoneRef}
+        type="text"
+        placeholder="+998*********"
+      />
+      <Input
+        required
+        type={'password'}
+        ref={passwordRef}
+        placeholder="********"
+      />
       <Input
         defaultValue={name || ""}
         required
@@ -156,7 +175,12 @@ export default function TeacherForm({
             return (
               <Label className="flex items-center gap-2" key={filial._id}>
                 {filial.title} - {filial.address}
-                <Checkbox checked={checkFilials.includes(filial._id)} onCheckedChange={(e: boolean) => handleCheckbox(e, filial._id)} />
+                <Checkbox
+                  checked={checkFilials.includes(filial._id)}
+                  onCheckedChange={(e: boolean) =>
+                    handleCheckbox(e, filial._id)
+                  }
+                />
               </Label>
             );
           })}

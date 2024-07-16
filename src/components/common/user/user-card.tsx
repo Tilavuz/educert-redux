@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import UserForm from "./user-form";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { serverUrl } from "@/helpers/shared";
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function UserCard({ _id, name, lastname, photo, filial }: UserInterface) {
@@ -30,7 +31,7 @@ export default function UserCard({ _id, name, lastname, photo, filial }: UserInt
       <div className="h-[200px] w-full overflow-hidden">
         <img
           className="rounded-t-lg object-cover object-center w-full h-full"
-          src={`${apiUrl.slice(0, 25)}/uploads/users/${photo}`}
+          src={`${serverUrl}/uploads/users/${photo}`}
           alt="image"
         />
       </div>

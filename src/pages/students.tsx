@@ -93,6 +93,7 @@ export default function Students() {
                 filial={student.filial}
                 groups={student.groups}
                 photo={student.photo}
+                phone={student?.auth?.phone}
               />
             );
           })}

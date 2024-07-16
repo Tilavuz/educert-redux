@@ -30,11 +30,15 @@ export default function StudentForm({
   id,
   name,
   lastname,
+  phone
 }: {
   id?: string;
   name?: string;
   lastname?: string;
+  phone?: string
 }) {
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const lastnameRef = useRef<HTMLInputElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
@@ -81,6 +85,8 @@ export default function StudentForm({
         name: nameRef?.current?.value,
         lastname: lastnameRef?.current?.value,
         photo: photoRef?.current?.files ? photoRef?.current?.files[0] : null,
+        phone: phoneRef?.current?.value,
+        password: passwordRef?.current?.value
       };
 
       if (id) {
@@ -124,6 +130,19 @@ export default function StudentForm({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
+      <Input
+        required
+        ref={phoneRef}
+        defaultValue={phone ?? "+998"}
+        type="text"
+        placeholder="+998*********"
+      />
+      <Input
+        required
+        ref={passwordRef}
+        type="password"
+        placeholder="********"
+      />
       <Input
         required
         ref={nameRef}

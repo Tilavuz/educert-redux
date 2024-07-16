@@ -10,7 +10,7 @@ export interface AuthInterface {
 
 export interface UserInterface  {
     _id?: string;
-    auth?: string;
+    auth?: AuthInterface;
     name: string;
     lastname: string;
     photo: string;
@@ -19,7 +19,7 @@ export interface UserInterface  {
 
 export interface TeacherInterface {
     _id: string;
-    auth: string;
+    auth: AuthInterface;
     name: string;
     lastname: string;
     photo: File | string | null;
@@ -30,7 +30,7 @@ export interface TeacherInterface {
 
 export interface StudentInterface {
     _id: string;
-    auth?: string;
+    auth?: AuthInterface;
     name: string;
     lastname: string;
     filial: FilialInterface | null;

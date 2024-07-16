@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { removeTeacher } from "@/features/teacher/teacher-slice";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-const apiUrl = import.meta.env.VITE_APP_API_URL;
+import { serverUrl } from "@/helpers/shared";
 
 export default function TeacherCard({
   name,
@@ -36,6 +36,7 @@ export default function TeacherCard({
   grade,
   filial,
   id,
+  phone
 }: {
   name: string;
   lastname: string;
@@ -44,6 +45,7 @@ export default function TeacherCard({
   grade: string;
   filial: FilialInterface[];
   id: string;
+  phone: string
 }) {
 
   const dispatch = useDispatch();
@@ -65,7 +67,7 @@ export default function TeacherCard({
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img
             className="shadow-sm object-cover object-center w-full h-full cursor-pointer"
-            src={`${apiUrl.slice(0, 25)}/uploads/teachers/${photo}`}
+            src={`${serverUrl}/uploads/teachers/${photo}`}
             alt="teacher profile"
             onClick={() => navigate(`/teachers/${id}`, {
               state: `${name}-${lastname}`
@@ -115,6 +117,7 @@ export default function TeacherCard({
                 lastname={lastname}
                 about={about}
                 grade={grade}
+                phone={phone}
               />
             </DialogContent>
           </Dialog>
