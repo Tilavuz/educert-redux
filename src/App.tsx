@@ -36,11 +36,7 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <PrivateRoute roles={["user", "admin", "teacher"]}>
-          <RootLayout />
-        </PrivateRoute>
-      ),
+      element: <RootLayout />,
       errorElement: (
         <Suspense fallback={<Loader />}>
           <ErrorPage />
@@ -49,31 +45,59 @@ export default function App() {
       children: [
         {
           index: true,
-          element: <Home />,
+          element: (
+            <PrivateRoute roles={["user", "admin"]}>
+              <Home />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/tables",
-          element: <Tables />,
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <Tables />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/teachers",
-          element: <Teachers />,
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <Teachers />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/students",
-          element: <Students />,
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <Students />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/users",
-          element: <Users />,
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <Users />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/teachers/:id",
-          element: <TeacherWorkTime />,
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <TeacherWorkTime />
+            </PrivateRoute>
+          ),
         },
         {
           path: "/class-schedule",
-          element: <Schedule />,
+          element: (
+            <PrivateRoute roles={['user', 'admin']}>
+              <Schedule />
+            </PrivateRoute>
+          ),
         },
       ],
     },

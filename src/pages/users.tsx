@@ -51,7 +51,8 @@ export default function Users() {
               name={user.name}
               lastname={user.lastname}
               photo={user.photo}
-              filial={user.filial}
+              filial={user.filial ? user.filial : []}
+              phone={user.auth?.phone}
             />
           );
         })}

@@ -55,6 +55,7 @@ export default function Login() {
         return;
       }
       toast.error(res.data.message);
+      dispatch(loginFail(res.data.message))
     } catch (err) {
       dispatch(loginFail(err instanceof Error ? err.message : "Server error!"));
       toast.error(error);

@@ -2,16 +2,15 @@ import { apiClient } from "@/api/api-client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { removeUser } from "@/features/user/user-slice";
-import { UserInterface } from "@/interfaces/auth-interface";
 import { Edit, Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import UserForm from "./user-form";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { serverUrl } from "@/helpers/shared";
-const apiUrl = import.meta.env.VITE_APP_API_URL;
+import { FilialInterface } from "@/interfaces/filial-interface";
 
-export default function UserCard({ _id, name, lastname, photo, filial }: UserInterface) {
+export default function UserCard({ _id, name, lastname, photo, filial, phone }: { _id?: string, name?: string, lastname?: string, photo?: string, filial?: FilialInterface[], phone?: string }) {
   
   const dispatch = useDispatch();
 
@@ -54,7 +53,12 @@ export default function UserCard({ _id, name, lastname, photo, filial }: UserInt
                 <DialogTitle>Ustoz malumotlarini o'zgartirish!</DialogTitle>
                 <DialogDescription></DialogDescription>
               </DialogHeader>
-              <UserForm id={_id} name={name} lastname={lastname} />
+              <UserForm
+                id={_id}
+                name={name}
+                lastname={lastname}
+                phone={phone}
+              />
             </DialogContent>
           </Dialog>
           <AlertDialog>
