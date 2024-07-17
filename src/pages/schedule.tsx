@@ -2,7 +2,7 @@ import SchduleBody from "@/components/common/schdule/schdule-body";
 import SchduleForm from "@/components/common/schdule/schdule-form";
 import TableHead from "@/components/common/table-head";
 
-export default function FilialTable() {
+export default function Schedule() {
   return (
     <div className="bg-white px-6 py-8">
       <div className="">

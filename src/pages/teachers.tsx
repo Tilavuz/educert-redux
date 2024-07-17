@@ -58,7 +58,7 @@ export default function Teachers() {
               grade={teacher.grade}
               filial={teacher.filial}
               id={teacher._id}
-              phone={teacher.auth.phone}
+              phone={teacher?.auth?.phone}
             />
           ))}
       </div>

@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Layouts
@@ -8,25 +8,36 @@ import RootLayout from "./layouts/root-layout";
 import Home from "@/pages/home/home";
 import Login from "@/pages/auth/login";
 const ErrorPage = lazy(() => import("@/pages/error-page"));
-const Tables = lazy(() => import("@/pages/tables/tables"));
-const Teachers = lazy(() => import("@/pages/teachers"));
-const Students = lazy(() => import("@/pages/students"));
-const Users = lazy(() => import("@/pages/users"));
-const TeacherWorktime = lazy(() => import("@/pages/teacher-worktime"));
-const Schedule = lazy(() => import("@/pages/schedule"));
 
 // Components
 import Loader from "@/components/common/loader";
-import PrivateRoute from "@/private/private-route";
-
-// import AuthPrivateRoute from "./private/private-auth";
+import PrivateRoute from "./private/private-route";
+import Tables from "@/pages/tables/tables";
+import Teachers from "@/pages/teachers";
+import Students from "@/pages/students";
+import Users from "@/pages/users";
+import TeacherWorkTime from "@/pages/teacher-worktime";
+import Schedule from "@/pages/schedule";
+import { useDispatch } from "react-redux";
+import { actionToken } from "./helpers/action-token";
+import { getUserData } from "./features/auth/auth-slice";
+import { AppDispatch } from "./app/store";
 
 export default function App() {
+  const token = actionToken.getToken("token");
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserData());
+    }
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <PrivateRoute>
+        <PrivateRoute roles={["user", "admin", "teacher"]}>
           <RootLayout />
         </PrivateRoute>
       ),
@@ -42,59 +53,27 @@ export default function App() {
         },
         {
           path: "/tables",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Tables />
-            </Suspense>
-          ),
+          element: <Tables />,
         },
         {
           path: "/teachers",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Teachers />
-            </Suspense>
-          ),
+          element: <Teachers />,
         },
         {
           path: "/students",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Students />
-            </Suspense>
-          ),
-        },
-        {
-          path: "/students",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Students />
-            </Suspense>
-          ),
+          element: <Students />,
         },
         {
           path: "/users",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Users />
-            </Suspense>
-          ),
+          element: <Users />,
         },
         {
           path: "/teachers/:id",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <TeacherWorktime />
-            </Suspense>
-          ),
+          element: <TeacherWorkTime />,
         },
         {
           path: "/class-schedule",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Schedule />
-            </Suspense>
-          ),
+          element: <Schedule />,
         },
       ],
     },

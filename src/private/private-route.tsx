@@ -1,32 +1,35 @@
-import { RootState } from "@/app/store";
-import Loader from "@/components/common/loader";
+import { AppDispatch, RootState } from "@/app/store";
+import { getUserData } from "@/features/auth/auth-slice";
 import { actionToken } from "@/helpers/action-token";
-import useGetAuth from "@/hooks/use-get-auth";
-import { ProviderPropsInterface } from "@/interfaces/provider-props";
-import { FC, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { ReactNode, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
 
-const PrivateRoute: FC<ProviderPropsInterface> = ({ children }) => {
-  const { getToken } = actionToken;
-  const {auth, error} = useSelector((state: RootState) => state.auth);
-  const { getAuth } = useGetAuth();
-  
+export default function PrivateRoute({
+  roles,
+  children,
+}: {
+  roles: string[];
+  children: ReactNode;
+}) {
+  const { auth, error } = useSelector((state: RootState) => state.auth);
+  const location = useLocation();
+  const token = actionToken.getToken("token");
+
+  const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
-    const token = getToken('token');
-    if (token) {
-      getAuth();
-    }
-  }, [getAuth, getToken, auth]);
+    dispatch(getUserData());
+  }, []);
 
-    const token = getToken("token")
-    if (token && auth) {
-      return children;
-    } else if (token && !auth && !error) {
-      return <Loader />;
-    }
+  if (token && !error && !auth) {
+    return <p>loader...</p>;
+  }
 
-    return <Navigate to="/login" />;
-};
+  if (!auth)
+    return <Navigate to={"/login"} state={{ from: location }} replace={true} />;
 
-export default PrivateRoute;
+  if (auth && roles.includes(auth.role)) {
+    return children;
+  }
+}
