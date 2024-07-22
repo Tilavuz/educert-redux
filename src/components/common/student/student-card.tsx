@@ -58,7 +58,7 @@ export default function StudentCard({
     <div className="basis-1/5 flex flex-col text-gray-700 bg-white shadow-md rounded-xl max-w-[340px]">
       <div className="mx-4 mt-4 h-[250px] overflow-hidden text-gray-700 bg-white rounded-xl border border-black">
         <img
-          src={`${serverUrl}/uploads/students/${photo}`}
+          src={`${serverUrl}/uploads/${photo}`}
           alt="card-image"
           className="object-cover w-full h-full"
         />

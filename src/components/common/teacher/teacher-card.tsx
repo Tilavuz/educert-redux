@@ -67,7 +67,7 @@ export default function TeacherCard({
         <div className="w-[120px] h-[120px] overflow-hidden border border-black rounded-md">
           <img
             className="shadow-sm object-cover object-center w-full h-full cursor-pointer"
-            src={`${serverUrl}/uploads/teachers/${photo}`}
+            src={`${serverUrl}/uploads/${photo}`}
             alt="teacher profile"
             onClick={() => navigate(`/teachers/${id}`, {
               state: `${name}-${lastname}`
