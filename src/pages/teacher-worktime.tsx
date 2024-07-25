@@ -35,7 +35,7 @@ export default function TeacherWorkTime() {
             <p className="p-2 border w-full rounded">{teacher?.about}</p>
             <p className="p-2 border w-full rounded">{teacher?.grade}</p>
             <p className="p-2 border w-full rounded">
-              {teacher?.filial.map((item) => item.title).join(", ")}
+              {teacher?.filial?.map((item) => item.title).join(", ")}
             </p>
           </div>
         </div>

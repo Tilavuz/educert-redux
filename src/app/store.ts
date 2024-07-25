@@ -11,6 +11,7 @@ import timeReducer from "@/features/time/time-slice";
 import workTableReducer from "@/features/worktable/work-table-slice";
 import menuReducer from "@/features/menu/menu-slice";
 import schduleReducer from "@/features/schdule/schdule-slice";
+import teacherTasksReducer from "@/features/teacher-task/teacher-task-slice";
 
 
 export const store = configureStore({
@@ -27,6 +28,7 @@ export const store = configureStore({
     worktable: workTableReducer,
     menu: menuReducer,
     schdule: schduleReducer,
+    teacherTasks: teacherTasksReducer,
   },
 });
 
