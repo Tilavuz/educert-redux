@@ -1,6 +1,5 @@
 import StatisticsCard from "@/components/common/statistics-card";
 import PrivateRoute from "@/private/private-route";
-import TeacherHome from "./teacher-home";
 
 export default function Home() {
   return (
@@ -12,9 +11,6 @@ export default function Home() {
           <StatisticsCard />
           <StatisticsCard />
         </div>
-      </PrivateRoute>
-      <PrivateRoute roles={['teacher']}>
-        <TeacherHome />
       </PrivateRoute>
     </div>
   );

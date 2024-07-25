@@ -22,7 +22,6 @@ import { useDispatch } from "react-redux";
 import { actionToken } from "./helpers/action-token";
 import { getUserData } from "./features/auth/auth-slice";
 import { AppDispatch } from "./app/store";
-import TeacherGroups from "./pages/teacher-pages/teacher-groups";
 
 export default function App() {
   const token = actionToken.getToken("token");
@@ -85,14 +84,6 @@ export default function App() {
           element: (
             <PrivateRoute roles={["admin", "user"]}>
               <TeacherWorkTime />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/groups",
-          element: (
-            <PrivateRoute roles={["admin", "teacher"]}>
-              <TeacherGroups />
             </PrivateRoute>
           ),
         },
