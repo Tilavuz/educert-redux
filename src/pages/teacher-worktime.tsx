@@ -24,7 +24,7 @@ export default function TeacherWorkTime() {
           <div className="max-w-[200px] h-[195px] border w-full">
             <img
             className="w-full h-full object-cover"
-              src={`${serverUrl}/uploads/teachers/${teacher?.photo}`}
+              src={`${serverUrl}/uploads/${teacher?.photo}`}
               alt="teacher profile image"
             />
           </div>
