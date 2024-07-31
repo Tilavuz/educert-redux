@@ -11,6 +11,8 @@ import timeReducer from "@/features/time/time-slice";
 import workTableReducer from "@/features/worktable/work-table-slice";
 import menuReducer from "@/features/menu/menu-slice";
 import schduleReducer from "@/features/schdule/schdule-slice";
+import departmentReducer from "@/features/department/department-slice";
+import departmentThemeReducer from "@/features/department-theme/department-theme-slice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +28,8 @@ export const store = configureStore({
     worktable: workTableReducer,
     menu: menuReducer,
     schdule: schduleReducer,
+    department: departmentReducer,
+    theme: departmentThemeReducer,
   },
 });
 

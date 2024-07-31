@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { actionToken } from "./helpers/action-token";
 import { getUserData } from "./features/auth/auth-slice";
 import { AppDispatch } from "./app/store";
+import Department from "./pages/department";
 
 export default function App() {
   const token = actionToken.getToken("token");
@@ -52,6 +53,14 @@ export default function App() {
           element: (
             <PrivateRoute roles={["admin", "user"]}>
               <Tables />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "/tables/subject/:id",
+          element: (
+            <PrivateRoute roles={["admin", "user"]}>
+              <Department />
             </PrivateRoute>
           ),
         },

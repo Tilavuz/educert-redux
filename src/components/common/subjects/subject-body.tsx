@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { apiClient } from "@/api/api-client";
 import { removeSubject } from "@/features/subject/subject-slice";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 export default function SubjectBody() {
   const { subjects } = useSelector((state: RootState) => state.subject);
@@ -47,7 +48,9 @@ export default function SubjectBody() {
         subjects?.map((subject) => {
           return (
             <tr key={subject._id} className="border-t border-t-[#a6b3c4]">
-              <td className="py-2 font-bold">{subject?.title}</td>
+              <td className="py-2 font-bold">
+                <Link to={`subject/${subject._id}`}>{subject?.title}</Link>
+              </td>
               <td className="py-2 font-bold">
                 {typeof subject?.filial === "object"
                   ? subject?.filial?.title
